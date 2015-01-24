@@ -1,5 +1,5 @@
 # CS 104 Student Repository
 
-- **Name**: Tommy Trojan
-- **USC ID**: 1234567890
-- **Email**: ttrojan@usc.edu
+- **Name**: Anubhav Sarkar
+- **USC ID**: 1697486881
+- **Email**: anubhavs@usc.edu
