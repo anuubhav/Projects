@@ -15,16 +15,11 @@ struct Item
     Item* next;
 };
 void readLists(char *filename, Item*& head1, Item*& head2);
-//Item* copyLL(Item* head);
-
 Item* helper(Item* head1, Item* head2, Item* current);
-
 Item* concatenate(Item* head1, Item* head2);  // returns head pointer to new list
-
-
 void removeEvens(Item*& head);
 double avg_helper(Item* head, double average, int counter);
- double findAverage(Item* head);
+double findAverage(Item* head);
 
 
 void readLists(char* filename, Item*& head1, Item*& head2)
@@ -44,7 +39,6 @@ void readLists(char* filename, Item*& head1, Item*& head2)
     str << string_vals;
 
     //temp pointers to traverse lists 1 & 2
-
     Item* temp1;
     Item* temp2;
 
@@ -69,17 +63,16 @@ void readLists(char* filename, Item*& head1, Item*& head2)
 
         else
         {
-
-            if (str) {temp1->next = new Item(val, NULL);} //create the next item
+            //create the next item
+            //move through the list
+            if (str) 
+            {temp1->next = new Item(val, NULL);} 
              temp1 = temp1->next;
 
         }
-        //move through the list
-
-
-        
+               
     }
-
+    //read in from text file
     getline(in_file, string_vals);
 
     //stringstream created to read in the values
@@ -93,7 +86,7 @@ void readLists(char* filename, Item*& head1, Item*& head2)
         //insert value into node
         str_two >> val;
         
-
+        //while head is not hte tail
         if (head2 == NULL)
         {
             head2= new Item(val, NULL);
@@ -101,9 +94,12 @@ void readLists(char* filename, Item*& head1, Item*& head2)
         }
         else 
         {
-            if (str_two) {temp2->next = new Item(val, NULL);}   //create the next item
+            //create the next item
+            //move through the list
+            if (str_two) 
+            {temp2->next = new Item(val, NULL);}   //create the next item
             temp2 = temp2->next;
-        } //move through the list
+        } 
 
         
     }
@@ -111,37 +107,26 @@ void readLists(char* filename, Item*& head1, Item*& head2)
 }
 
 
-/*Item* copyLL(Item* head)
-{
-
-    if(head == NULL) return NULL;
-    else {
-        return new Item(head->val,
-                        copyLL(head->next));
-
-    }
-} 
-*/
-
 
 Item* helper(Item* head1, Item* head2, Item* current)
 {
     
-
+    //if head1 is an empty list
     if (head1->next == NULL) {
         current = head2;
     }
+    //if head2 is an empty list
     if (head2->next == NULL) {
         current = head1;
     }
-
+    //connect the two lists
     if (current->next == NULL)
     {
         current->next = head2;
         return head1;
     }
+    //run through the whole list
     helper(head1, head2, current->next);
-    //helper(new Item(head1->val, head1->next), new Item(head2->val, head2->next), new Item(current->next->val,current->next->next));
 
 
 }
@@ -168,12 +153,14 @@ void removeEvens(Item*& head)
     Item* temp;
     if (head->next == NULL) 
         {return;}
+    //if head is even
     if (head->val%2 ==0)
         {
             temp = head;
             head = head->next;
             delete temp;
         }
+    //delete even values
     if (head->next->val%2 ==0)
         {   temp = head->next;
             head->next = head->next->next;
@@ -190,17 +177,19 @@ removeEvens(head->next);
  double avg_helper(Item* head, double average, int counter)
 {
 
-if (head== NULL)
-{
-average = average/counter;
-return average;
-}
-++counter;
-average=average + head->val;
+    if (head== NULL)
+    {
+        average = average/counter;
+        return average;
+    }
+    //# of items increased by 1
+    counter++;
+    //running total increased
+    average=average + head->val;
 
-avg_helper(head->next, average, counter);
+    avg_helper(head->next, average, counter);
 
-avg_helper(head->next, average, counter);
+   
 
 
 }
@@ -209,7 +198,7 @@ avg_helper(head->next, average, counter);
  {
 
 
-avg_helper(head, 0.0, 0);
+    avg_helper(head, 0.0, 0);
 
 
 
@@ -227,13 +216,12 @@ void printList(ostream& ofile, Item* head)
 
 int main(int argc, char* argv[])
 {
+    //initial heads
     Item* head_one = NULL;
     Item* head_two = NULL;
     readLists(argv[1], head_one, head_two);
     ofstream out_file;
     out_file.open(argv[2]);
-    //printList(out_file, head_one);
- 
     head_one = concatenate(head_one,head_two);
     printList(out_file, head_one);
     removeEvens(head_one);
