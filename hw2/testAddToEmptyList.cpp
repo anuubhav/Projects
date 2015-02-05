@@ -37,19 +37,13 @@ int main() {
     cout << "FAIL: 3.3 is not at the 0th index of the list, " << list->get(0);
     cout << " is instead." << endl;
   }
+ 
+// for (int i=0; i< list->size(); i++)
 
-  list->insert(1,1.0);
-  list->remove(0);
-  list->remove(1);
-  if (!list->empty()) {
-    cout << "SUCCESS: Items are properly deleted." << endl;
-  } else {
-    cout << "FAIL: Items are not properly deleted." << endl;
-  }
+//{
 
-  
-
-
+  //cout << list->get(i);
+//}
   // Clean up memory.
   delete list;
 }

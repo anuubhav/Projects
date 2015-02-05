@@ -15,19 +15,23 @@ success = true;
 StackDbl* stack = new StackDbl();	
 stringstream strm; 
 strm.str(expr);
+//what the stringstream prints to is character
 string character;
 double number =0;
+//math is any operator: + - / *
 string math = "";
 double result =0;
 double conclusion;
+//second_success is just to make sure that all test conditions are met
 bool second_success = true;
-//cout << expr << endl;
+
+
 while (second_success )
 {
 	while (strm >> character)
 	{
 		
-			
+			//if the first character of the string is a digit
 			if (isdigit(character[0]))
 			{
 

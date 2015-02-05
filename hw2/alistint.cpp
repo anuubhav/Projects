@@ -22,7 +22,7 @@ AListInt::AListInt(int cap)
 AListInt::~AListInt()
 {
 
-
+	delete [] data;
 
 }
 
@@ -34,6 +34,7 @@ return size_;
 
 bool AListInt::empty() const
 {
+	//if the array list is empty
 if (size_ ==0)
 	{		
 		return true;
@@ -53,7 +54,17 @@ else
 void AListInt::insert (int pos, const int& val)
 {
 
-	if (size_ < capacity && pos > 0)
+
+	//creating the head
+	if (pos ==0 && size_ == 0)
+	{
+
+		data[0] = val;
+		size_++;
+
+	}
+
+	else if (size_ < capacity && pos > 0)
 	{	
 
 	//freeing up space to put an int in
@@ -67,6 +78,24 @@ void AListInt::insert (int pos, const int& val)
 
 
 	}
+	//if the position is >= the size
+	else if (pos >= size_ && size_ == capacity)
+	{
+		this->resize();
+
+	//freeing up space to put an int in
+	for (int a = size_; a >= pos; a--)
+		{
+			data[a] = data[a-1];		
+		}
+	
+	data[pos-1] = val;
+	size_++;
+
+	}
+
+
+
 
 }
 
@@ -75,9 +104,13 @@ void AListInt::insert (int pos, const int& val)
 */
 void AListInt::remove (int pos)
 {
+
+
  //move items to the left to get rid of gaps
  if (pos > 0 && pos <= size_)
-	{for (int a = pos,  b = a-1; a < size_; a++, b++)
+	{
+
+	for (int a = pos,  b = a-1; a < size_; a++, b++)
 
 		{
 			data[b] = data[a];
@@ -111,19 +144,24 @@ return data[position-1];
 int const & AListInt::get (int position) const
 {
 
-return data[position];
+return data[position-1];
 
 }
-
+//if the new item to insert is greater than what the array list can accomodate
 void AListInt::resize()
-{
-	int* temp_data = data;
-	data = new int[2*capacity];
-	for(int i=0; i< size_; i++)
-		{data[i] = temp_data[i];
-		}
-	delete[] temp_data;
-	capacity *=2;
+{	
 
+	if (size_ >= capacity)
+	{
+		//temporary array to hold items
+		int*  temp_data = data;
+		data = new int[2*capacity];
+		for(int i=0; i< capacity; i++)
+		{
+			data[i] = temp_data[i];
+		}
+		delete[] temp_data;
+		capacity *=2;
+	}
 
 }

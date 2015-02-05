@@ -15,13 +15,18 @@ g++ -g -Wall testAddToEmptyList.cpp llistdbl.cpp -o testAddToEmptyList
 To test:
 ./testAddToEmptyList
 
+If there are invalid inserts and removals, I return. 
 Question 4:
 To compile: 
 g++ -g -Wall -c alistint.cpp -o alistint.o
 g++ -g -Wall alisttest.cpp alistint.o -o alisttest
 
+
 To test:
 ./alisttest
+
+
+If there are invalid inserts and removals, I return.
 
 Question 5:
 Files: stackdbl.h  and stackdbl.cpp

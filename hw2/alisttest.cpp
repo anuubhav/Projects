@@ -19,8 +19,8 @@ if (!list->empty())
 else
 { cout << "FAIL: You need to check your code. Your list didn't items added to it." << endl;}
 
-cout << list->get(1) << " is the value for the first part yo" << endl;
-cout << list->get(2) << " is the second value for the second part ok" << endl;
+cout << list->get(1) << " is the value for the first number " << endl;
+cout << list->get(2) << " is the second value for the second number ok" << endl;
 
 if (list->size() == 2)
 {
@@ -63,5 +63,28 @@ else
 		cout << "FAILURE: You didn't change the value of an item" << endl;
 
 	}
+
+
+   list->insert(4,4.0);
+  list->insert(5,5.0); 
+    list->insert(6,6.0);
+  list->insert(7,7.0); 
+    list->insert(8,8.0);
+  list->insert(9,9.0);
+  list->insert(10,10.0);
+
+  list->insert(11,11.0);
+
+  if (list->get(11) == 11.0)
+  {
+  	cout << "SUCCESS: You can add past the list" << endl;
+
+  } 
+  else
+  {
+  	cout << "FAILURE: Your list does not resize" << endl;
+  } 
+
+  //delete list;
 
 }

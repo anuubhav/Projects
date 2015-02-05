@@ -30,16 +30,17 @@ void LListDbl::insert(int loc, const double& val)
 {
   //cases of inserting/removing HEAD/TAIL
   //declarations
+  
   //if loc bad RETURN
-
   if (loc < 0 || loc > size_)
     {return;
     }
 
-
+  //creating the new item to store the new data value
   Item* insertion = new Item();
   insertion->val = val;
 
+  //if the linkedlist is empty
   if (loc == 0 && size_==0 )
   {
     head_ = insertion;
@@ -53,6 +54,7 @@ void LListDbl::insert(int loc, const double& val)
 
   }
   
+  //creating a head in an already established LL
   else if (loc==0 && size_!=0 )
   {
     head_->prev = insertion;
@@ -62,6 +64,7 @@ void LListDbl::insert(int loc, const double& val)
 
   }
 
+  //creating a standard node
   else if (loc >0 && loc < size_)
   {
 
@@ -74,7 +77,7 @@ void LListDbl::insert(int loc, const double& val)
 
     
   }
-
+  //creating the tail
   else if (loc == size_)
   {
     tail_->next = insertion;
@@ -100,6 +103,7 @@ void LListDbl::remove(int loc)
  if (loc >= size_ || loc < 0) 
     {return;}
 
+//deleting the whole list
 else if (loc == 0 && size_ ==1)
   {
     head_ = NULL;
@@ -108,6 +112,7 @@ else if (loc == 0 && size_ ==1)
     delete tail_;
 
   }
+  //deleting the head
  else if (loc == 0)
     {
     Item* current = head_;
@@ -115,7 +120,7 @@ else if (loc == 0 && size_ ==1)
     head_->prev = NULL;
     delete current;
     }
-
+ //deleting the tail
  else if (loc == size_-1)
   {
     Item* current = tail_;
@@ -124,7 +129,7 @@ else if (loc == 0 && size_ ==1)
     delete current;
   }
 
-  
+  //standard deletion
   else 
     { 
   Item* current = getNodeAt(loc);
@@ -137,18 +142,20 @@ else if (loc == 0 && size_ ==1)
 size_--;
 }
 
+//set a value
 void LListDbl::set(int loc, const double& val)
 {
   Item *temp = getNodeAt(loc);
   temp->val = val;
 }
 
+//get a value
 double& LListDbl::get(int loc)
 {
   Item *temp = getNodeAt(loc);
   return temp->val;
 }
-
+//get a value
 double const & LListDbl::get(int loc) const
 {
   Item *temp = getNodeAt(loc);
