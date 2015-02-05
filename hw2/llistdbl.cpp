@@ -31,8 +31,8 @@ void LListDbl::insert(int loc, const double& val)
   //cases of inserting/removing HEAD/TAIL
   //declarations
   
-  //if loc bad RETURN
-  if (loc < 0 || loc > size_)
+   //if loc bad RETURN
+   if (loc < 0 || loc > size_)
     {return;
     }
 
@@ -45,11 +45,11 @@ void LListDbl::insert(int loc, const double& val)
   {
     head_ = insertion;
     
-    head_->prev = insertion;
+    head_->prev = NULL;
     head_->next = insertion;
     tail_ = insertion;
     
-    tail_->next = insertion;
+    tail_->next = NULL;;
     tail_->prev = insertion;
 
   }
@@ -136,6 +136,7 @@ else if (loc == 0 && size_ ==1)
   Item* previous = current->prev;
   previous->next = current->next;
   delete current;
+  
  
     }
 

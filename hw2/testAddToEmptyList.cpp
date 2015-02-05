@@ -38,12 +38,6 @@ int main() {
     cout << " is instead." << endl;
   }
  
-// for (int i=0; i< list->size(); i++)
-
-//{
-
-  //cout << list->get(i);
-//}
   // Clean up memory.
   delete list;
 }
