@@ -43,10 +43,10 @@ using namespace std;
    */
   void SetInt::insert(const int& val)
   {
-  	//checking if the number exists
+  	//checking if the number already exists in the set 
   	bool ok = true;
-  	int size_ = list_.size();
-  	for (int i=0; i < size_; i++)
+  	int nsize_ = list_.size();
+  	for (int i=0; i < nsize_; i++)
   		{
 
   			if (list_.get(i) == val)
@@ -193,14 +193,35 @@ using namespace std;
 
   } 
 
-  SetInt operator|(const SetInt& other) const
+  SetInt SetInt::operator|(const SetInt& other) const
   {
 
-   return setIntersection(&other);
+   SetInt a(*this);
+   for (int i=0; i<other.size(); i++)
+   {
+    a.insert(other.list_.get(i));
+   }
+
+   return a;
 
   }
-  SetInt operator&(const SetInt& other) const
+  SetInt SetInt::operator&(const SetInt& other) const
   {
 
-    return setUnion(&other);
+    SetInt a = SetInt();
+
+    for (int i=0; i < this->size(); i++)
+    {
+        
+        if (this->exists(other.list_.get(i)))
+        {
+          a.insert(other.list_.get(i));
+
+        }
+
+      
+
+    }
+
+    return a;
   }

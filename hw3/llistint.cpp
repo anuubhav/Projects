@@ -234,9 +234,9 @@ Item* iterator = other.head_;
 LListInt& LListInt::operator=(const LListInt& other)
 {
 
-(if this == other) {return *this;}
+if (this == &other) {return *this;}
 
-else {
+
   delete this;
   Item* iterator = other.head_;
   while (iterator != NULL)
@@ -246,7 +246,7 @@ else {
     }  
   return *this;
   
-  }
+  
 }
 
 
