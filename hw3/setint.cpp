@@ -1,6 +1,6 @@
 #include "setint.h"
-//#include "llistint.h"
 #include <cstdlib>
+#include <iostream>
 
 using namespace std;
    SetInt::SetInt()
@@ -45,15 +45,22 @@ using namespace std;
   {
   	//checking if the number already exists in the set 
   	bool ok = true;
-  	int nsize_ = list_.size();
-  	for (int i=0; i < nsize_; i++)
+
+    if (!list_.empty())
+    {
+    
+  	for (int i=0; i < size(); i++)
   		{
 
   			if (list_.get(i) == val)
-  				{ok = false;}
+  				{
+            ok = false;
+            return;
+          }
 
 
   		}
+    }
   	//if the number isn't already in the set
 	if (ok == true)
 	{
@@ -71,13 +78,11 @@ using namespace std;
   {
   	//checking if the number exists
 	bool ok = false;
-	int position = 0;
   	int size_ = list_.size();
   	for (int i=0; i < size_; i++)
   		{
 
   			if (list_.get(i) == val)
-  			position = i;
   			ok = true;
   			break;	
 
@@ -88,7 +93,7 @@ using namespace std;
 	if (ok == true)
 	{
 
-		list_.remove(position);
+		list_.remove(val);
 
 	}
 
@@ -100,21 +105,19 @@ using namespace std;
   bool SetInt::exists(const int& val) const
   {
 	bool ok = false;
-  	int size_ = list_.size();
-  	for (int i=0; i < size_; i++)
+  	
+  	for (int i=0; i < list_.size(); i++)
   		{
 
   			if (list_.get(i) == val)
-  				{ok = true;}
+  				{
+            ok = true;
+          }
 
 
   		}
 
-  	//the item is in the set
-	if (ok == true) return true;
-
-	//the item is not in the set
-	else return false;
+  return ok;
 
 
   }
@@ -140,8 +143,8 @@ using namespace std;
   	if (access >0 )
   	{
   		access++;
-  		if (access == list_.size()+1) {return NULL;} 
-  		else {return &list_.get(access-1);}
+  		//if (access == list_.size()) {return NULL;} 
+  		 return &list_.get(access-1);
   	}
 
   	else return NULL;
@@ -195,7 +198,7 @@ using namespace std;
 
   SetInt SetInt::operator|(const SetInt& other) const
   {
-
+    //return this->setUnion(other);
    SetInt a(*this);
    for (int i=0; i<other.size(); i++)
    {

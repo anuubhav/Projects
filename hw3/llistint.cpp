@@ -15,9 +15,8 @@ LListInt::~LListInt()
 
 bool LListInt::empty() const
 {
-  return size_ == 0;
+  return size_ ==0;
 }
-
 int LListInt::size() const
 {
   return size_;
@@ -33,7 +32,8 @@ void LListInt::insert(int loc, const int& val)
   
    //if loc bad RETURN
    if (loc < 0 || loc > size_)
-    {return;
+    {
+      return;
     }
 
   //creating the new item to store the new data value
@@ -41,23 +41,23 @@ void LListInt::insert(int loc, const int& val)
   insertion->val = val;
 
   //if the linkedlist is empty
-  if (loc == 0 && size_==0 )
+   if (loc == 0 && size_==0 )
   {
     head_ = insertion;
     
     head_->prev = NULL;
-    head_->next = insertion;
-    tail_ = insertion;
+    head_->next = NULL;
+    tail_ = head_;
     
-    tail_->next = NULL;;
-    tail_->prev = insertion;
+   // tail_->next = NULL;
+  //  tail_->prev = insertion;
 
   }
   
   //creating a head in an already established LL
   else if (loc==0 && size_!=0 )
   {
-    head_->prev = insertion;
+    head_->prev = insertion; 
     insertion->next = head_;
     insertion->prev = NULL;
     head_ = insertion;
@@ -101,7 +101,9 @@ void LListInt::remove(int loc)
   //if loc is 0
   //if loc is size -1
  if (loc >= size_ || loc < 0) 
-    {return;}
+    {
+      return;
+    }
 
 //deleting the whole list
 else if (loc == 0 && size_ ==1)
@@ -110,6 +112,7 @@ else if (loc == 0 && size_ ==1)
     tail_ = NULL;
     delete head_;
     delete tail_;
+    //delete getnodeAt(0);
 
   }
   //deleting the head
@@ -179,34 +182,8 @@ void LListInt::push_back(const int& val)
 {
 
   insert(size_,val);
-  size_++;
   
- /* if (size_ == 0)
-  {
-    Item* new_head = new Item;
-    new_head->val = val;
-    new_head->prev = NULL;
-    new_head->next = new_head;
-    head_ = new_head;
-    size_++;
-  
-  }
 
-  else
-  {
-
-  //creating temp item
-  Item* insertion = new Item;
-  insertion->val = val;
-  
-  //reassigning pointers
-  tail_->next = insertion;
-  insertion->prev = tail_;
-  insertion->next = NULL;
-  tail_ = insertion;
-  size_++; 
-
-  } */
 
 }
 
@@ -237,7 +214,7 @@ LListInt& LListInt::operator=(const LListInt& other)
 if (this == &other) {return *this;}
 
 
-  delete this;
+  //delete this;
   Item* iterator = other.head_;
   while (iterator != NULL)
     {
