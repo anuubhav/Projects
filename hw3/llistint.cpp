@@ -1,3 +1,4 @@
+#include <iostream>
 #include "llistint.h"
 #include <cstdlib>
 
@@ -44,11 +45,11 @@ void LListInt::insert(int loc, const int& val)
    if (loc == 0 && size_==0 )
   {
     head_ = insertion;
-    
+   
     head_->prev = NULL;
     head_->next = NULL;
     tail_ = head_;
-    
+     std::cout << "HERE?" << std::endl;
    // tail_->next = NULL;
   //  tail_->prev = insertion;
 
@@ -108,10 +109,12 @@ void LListInt::remove(int loc)
 //deleting the whole list
 else if (loc == 0 && size_ ==1)
   {
+    Item* head_pointer = head_;
+
     head_ = NULL;
     tail_ = NULL;
-    delete head_;
-    delete tail_;
+    delete head_pointer;
+    
     //delete getnodeAt(0);
 
   }
@@ -119,7 +122,7 @@ else if (loc == 0 && size_ ==1)
  else if (loc == 0)
     {
     Item* current = head_;
-    head_ = head_->next;
+    head_ = current->next;
     head_->prev = NULL;
     delete current;
     }
@@ -169,9 +172,7 @@ int const & LListInt::get(int loc) const
 void LListInt::clear()
 {
   while(head_ != NULL){
-    Item *temp = head_->next;
-    delete head_;
-    head_ = temp;
+    remove(0);
   }
   tail_ = NULL;
   size_ = 0;
@@ -195,9 +196,10 @@ LListInt::LListInt(const LListInt& other)
 
 Item* iterator = other.head_;
 
+ 
   while (iterator != NULL)
     {
-
+     
       push_back(iterator->val);
       iterator = iterator->next;
     }  
@@ -214,10 +216,12 @@ LListInt& LListInt::operator=(const LListInt& other)
 if (this == &other) {return *this;}
 
 
-  //delete this;
+  clear();
   Item* iterator = other.head_;
   while (iterator != NULL)
     {
+       std::cout << iterator->val << "  " << std::endl;
+      std::cout << other.size() << std::endl;
       push_back(iterator->val);
       iterator = iterator->next;
     }  
