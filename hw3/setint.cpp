@@ -129,8 +129,29 @@ using namespace std;
   int const* SetInt::first()
   {
   	//allowing next() to be used
-  	access = 1;
-  	return &list_.get(0);
+  	
+    if (access ==0 )
+      {
+        access = 1;
+      	if (!list_.empty())
+          {
+            return &list_.get(0);
+          }
+        else 
+          {
+            return NULL;
+          } 
+      } 
+
+    else 
+    {
+      return NULL;
+
+    }
+    
+
+
+
   }
 
   /**

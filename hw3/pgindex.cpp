@@ -7,6 +7,8 @@
 #include <cstdlib>
 #include <algorithm>
 #include "setint.h"
+#include <stdio.h>
+#include <string.h>
 
 using namespace std;
 void hyphen(string fullstring, int position, map<string, SetInt*> &mymap, int page);
@@ -184,7 +186,16 @@ int page = 1;
 		
 	}
 
+	for (int i=3; i<argc; i++)
+	{
+		for (unsigned int j=0; j< strlen(argv[i]); j++)
+				{
 
+					argv[i][j] = tolower(argv[i][j]);
+
+
+				}
+	}
 
 	 for (int i=3; i<argc; i++)
 	{

@@ -49,7 +49,6 @@ void LListInt::insert(int loc, const int& val)
     head_->prev = NULL;
     head_->next = NULL;
     tail_ = head_;
-     std::cout << "HERE?" << std::endl;
    // tail_->next = NULL;
   //  tail_->prev = insertion;
 
@@ -171,16 +170,24 @@ int const & LListInt::get(int loc) const
 
 void LListInt::clear()
 {
-  while(head_ != NULL){
-    remove(0);
+    while (head_ != NULL)
+    {
+      Item* temp = head_->next;
+      delete head_;
+      head_ = temp;
+    }
+
+    tail_ = NULL;
+    size_ = 0;
+
+    
   }
-  tail_ = NULL;
-  size_ = 0;
-}
 
 
 void LListInt::push_back(const int& val)
 {
+
+
 
   insert(size_,val);
   
@@ -194,6 +201,9 @@ void LListInt::push_back(const int& val)
 LListInt::LListInt(const LListInt& other)
 {
 
+head_ = NULL;
+tail_ = NULL;
+size_ =  0;
 Item* iterator = other.head_;
 
  
@@ -220,8 +230,7 @@ if (this == &other) {return *this;}
   Item* iterator = other.head_;
   while (iterator != NULL)
     {
-       std::cout << iterator->val << "  " << std::endl;
-      std::cout << other.size() << std::endl;
+      
       push_back(iterator->val);
       iterator = iterator->next;
     }  

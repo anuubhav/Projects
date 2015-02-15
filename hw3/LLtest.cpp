@@ -37,7 +37,7 @@ int main() {
     cout << "FAIL: 3 is not at the 0th index of the list, " << list->get(0);
     cout << " is instead." << endl;
   }
- /*
+ 
  //copy constructor
   LListInt test(*list);
   // Check if the test is still empty.
@@ -54,8 +54,9 @@ int main() {
     cout << "FAIL: Copy constructor does not work for test 2" << list->get(0);
     cout << " is instead." << endl;
   }
-*/
+
   //assignment operator
+ 
   LListInt second = *list;
     if (!second.empty()) {
     cout << "SUCCESS: Assignment operator works for test 1" << endl;
@@ -69,7 +70,7 @@ int main() {
   } else {
     cout << "FAIL: Assignment operator does not work for test 2" << list->get(0);
     cout << " is instead." << endl;
-  }
+  } 
 
   // Clean up memory.
   delete list;
