@@ -14,6 +14,8 @@ Product(category_, name_, price_, qty_),
 
 {
 
+string lower_genre = convToLower(genre);
+   keywords_.insert(lower_genre);
 
 
 }
@@ -23,15 +25,14 @@ set<string> Movie::keywords() const
 {
 
 
-    set<string> words;
 
- 	string lower_genre = convToLower(genre);
-   words.insert(lower_genre);
+
+ 	
 
 	
   
 	
-    return words;
+    return keywords_;
 
 
 
@@ -53,7 +54,7 @@ set<string> Movie::keywords() const
  
  void Movie::dump(std::ostream& os) const
 {
- os << name_ << category_ << "\n" << price_ << "\n" << qty_ << "\n" << genre << "\n" << rating << endl;
+ os <<  category_ << "\n" << name_ << "\n" << price_ << "\n" << qty_ << "\n" << genre << "\n" << rating << endl;
 
 
 	

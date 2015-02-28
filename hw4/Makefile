@@ -18,11 +18,11 @@ btest.cpp: btest.cpp
 book.o: book.cpp book.h product.h
 	$(CXX) $(CXXFLAGS) $(DEFS) -o $@ -c book.cpp
 
-#clothing.o: clothing.cpp product.cpp
-#	$(CXX) $(CXXFLAGS) $(DEFS) -o $@ -c clothing.cpp
+clothing.o: clothing.cpp product.cpp
+	$(CXX) $(CXXFLAGS) $(DEFS) -o $@ -c clothing.cpp
 
-#movie.o: movie.cpp product.cpp
-#	$(CXX) $(CXXFLAGS) $(DEFS) -o $@ -c movie.cpp
+movie.o: movie.cpp product.cpp
+	$(CXX) $(CXXFLAGS) $(DEFS) -o $@ -c movie.cpp
 
 amazon.o: amazon.cpp db_parser.h datastore.h product_parser.h 
 	$(CXX) $(CXXFLAGS) $(DEFS) -o $@ -c amazon.cpp

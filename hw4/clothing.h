@@ -11,9 +11,9 @@ class Clothing : public Product{
 
   public:
   Clothing(const std::string category, const std::string name, double price, int qty, const std::string size, const std::string brand);
-  std::set<std::string> keywords() const {return keywords_;}
-  string displayString() const {return info;}
-  void dump();
+  std::set<std::string> keywords() const;
+  string displayString() const;
+  void dump(std::ostream& os) const;
   
 
   protected:

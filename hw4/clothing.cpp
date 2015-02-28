@@ -9,64 +9,55 @@ using namespace std;
 Clothing::Clothing(const std::string category, const std::string name, double price, int qty, const string size, const string brand):
 
 Product(category_, name_, price_, qty_),		
-  size(size),gory, const std::string name, double price, int qty, const string si
+  size(size),
   brand(brand)
 
 {
 
- set<string>::iterator it;gory, const std::string name, double price, int qty, const string si
+ set<string>::iterator it;
 
    	set<string> brand_words = parseStringToWords(brand);
 	   	for (it = brand_words.begin(); it!=brand_words.end(); ++it)
 	   	{	
 
-	    keywords_.insert(*it);
-gory, const std::string name, double price, int qty, const string si
-		}  gory, const std::string name, double price, int qty, const string si
-	info = size + brand;
+	    string temp = *it;
+	   	string temp_lower = convToLower(temp);
+	    keywords_.insert(temp_lower);
 
-
-}
-
-/*
-set<string> Clothing::keywords()
-{
-
-
-    set<string> words;
-	 set<string>::iterator it;
->>
-
-
-   	set<string> brand_words = parseStringToWords(brand);
-	   	for (it = brand_words.begin(); it!=brand_words.end(); ++it)
-	   	{	
->
-
-	    words.insert(*it);
 
 		}  
-	
 
-    return words;
+
+}
+
+
+set<string> Clothing::keywords() const
+{
+
+
+    return keywords_;
 
 
 
 }
 
- string Clothing::displayString()
+ string Clothing::displayString() const
  {
 
- 	string info = size + brand;
- 	return info;
+	std::stringstream info;
+ 	info << name_ << "\n";
+ 	info << "Brand: " << brand << " " << "Size: " << size << "\n";
+ 	info << price_ << " " << qty_ << " left" << "\n";
+
+ 	string info_string = info.str();
+ 	return info_string;
 
  }
-*/
- void Clothing::dump()
+
+
+ void Clothing::dump(std:: ostream& os) const
 {
 
-	dump();
-	cout << size << endl;
-	cout << brand << endl;>
+	 os <<  category_ << "\n" << name_ << "\n" << price_ << "\n" << qty_ << "\n" << size << "\n" << brand << endl;
 
 }
