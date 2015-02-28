@@ -41,9 +41,7 @@ class DataStore {
    */
   virtual void dump(std::ostream& ofile) = 0;
 
-protected:
-std::vector<Product*> items;
-std::set<User, std::vector> users;
+
 
 
 };

@@ -15,20 +15,18 @@ Product(category_, name_, price_, qty_),
 {
 
 
-	keywords_.insert(genre);
-	info = genre + rating;
 
 }
 
-/*
-set<string> Movie::keywords()
+
+set<string> Movie::keywords() const
 {
 
 
     set<string> words;
 
- 
-   words.insert(genre);
+ 	string lower_genre = convToLower(genre);
+   words.insert(lower_genre);
 
 	
   
@@ -39,20 +37,24 @@ set<string> Movie::keywords()
 
 }
 
- string Movie::displayString()
+ string Movie::displayString() const
  {
+ 	std::stringstream info;
+ 	info << name_ << " " << category_ << "\n";
+ 	info << "Genre: " << genre << " " << "Rating: " << rating << "\n";
+ 	info << price_ << " " << qty_ << " left" << "\n";
 
- 	string info = genre + rating;
- 	return info;
+ 	string info_string = info.str();
+ 	return info_string;
 
  }
 
-*/
- 
- void Movie::dump()
-{
 
-	dump();
-	cout << genre << endl;
-	cout << rating << endl;
+ 
+ void Movie::dump(std::ostream& os) const
+{
+ os << name_ << category_ << "\n" << price_ << "\n" << qty_ << "\n" << genre << "\n" << rating << endl;
+
+
+	
 }
