@@ -40,10 +40,12 @@ class Data: public DataStore {
    */
   void dump(std::ostream& ofile) = 0;
 
+  void keywordMap(& map<string, set<Product*>> kmap);
+
 protected:
 std::vector<Product*> items;
-std::map<User, std::vector> users;
-
+std::map<User, std::queue<Product*>> users;
+std::map<string, set<Product*>> kmap
 
 };
 
