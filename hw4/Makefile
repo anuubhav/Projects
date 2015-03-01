@@ -12,8 +12,8 @@ amazon: $(OBJS)
 btest: btest.cpp book.o product.o
 	$(CXX) $(CXXFLAGS) $(DEFS) -o $@ book.o product.o
 
-btest.cpp: btest.cpp
-	$(CXX) $(CXXFLAGS) $(DEFS) btest.cpp
+#btest.cpp: btest.cpp
+#	$(CXX) $(CXXFLAGS) $(DEFS) btest.cpp
 
 book.o: book.cpp book.h product.h
 	$(CXX) $(CXXFLAGS) $(DEFS) -o $@ -c book.cpp

@@ -1,13 +1,16 @@
-
+#ifndef DATA_H
+#define DATA_H
 #include <string>
 #include <set>
 #include <vector>
+#include <map>
 #include "product.h"
 #include "user.h"
 #include "movie.h"
 #include "clothing.h"
 #include "book.h"
 #include "datastore.h"
+#include "util.h"
 /** 
  * DataStore Interface needed for parsing and instantiating products and users
  *
@@ -16,7 +19,7 @@
  */
 class Data: public DataStore {
  public:
-  ~Data() { }
+  ~Data();
 
   /**
    * Adds a product to the data store
@@ -40,12 +43,12 @@ class Data: public DataStore {
    */
   void dump(std::ostream& ofile) = 0;
 
-  void keywordMap(& map<string, set<Product*>> kmap);
+  void keywordMap(map<string, set<Product*> >& kmap);
 
 protected:
 std::vector<Product*> items;
-std::map<User, std::queue<Product*>> users;
-std::map<string, set<Product*>> kmap
+std::map<User, std::queue<Product*> > users;
+std::map<string, set<Product*> > kmap;
 
 };
-
+#endif

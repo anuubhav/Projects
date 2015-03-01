@@ -3,19 +3,21 @@
 #include <vector>
 #include "product.h"
 #include "user.h"
-#include "movie.h"
-#include "clothing.h"
-#include "book.h"
 #include "data.h"
+#include "util.h"
 #include <queue> 
+#include <map>
 
+using namespace std;
 /** 
  * DataStore Interface needed for parsing and instantiating products and users
  *
  * A derived version of the DataStore can provide other services as well but
  * must support those below
  */
-  ~Data() { }
+  Data::~Data() { 
+
+  }
 
   /**
    * Adds a product to the data store
@@ -25,17 +27,17 @@
     items.push_back(p);
 
     set<string> key_holder = p->keywords();
-    map<string, set<Product*>>::iterator finder;
+    map<string, set<Product*> >::iterator finder;
 
 
     for (set<string>::iterator it=key_holder.begin(); it!=key_holder.end(); ++it)
     {
 
-      finder = kmap.find(it*);
+      finder = kmap.find(*it);
       if (finder == kmap.end())
       {
 
-        kmap.insert(make_pair(it*, p ));
+        kmap.insert(make_pair(*it, p ));
 
 
 
@@ -45,7 +47,7 @@
       else
       {
 
-        it->second.insert(p);
+        //kmap[*finder].insert(p);
 
 
       }
@@ -77,8 +79,42 @@
     if (type ==0)
     {
 
+    vector<Product*> results;
+    set<string> comparison; 
+
+    map<string,set<Product*> >::iterator it;
+    set<Product*>::iterator it_set;
+
+    for (it = kmap.begin(); it != kmap.end(); ++it)
+    {
+      //comparison = it->second.keywords();
+      
+      
+          for (it_set = it->second.begin(); it_set!= it->second.end(); ++it_set)
+             { 
+              Product * pointer = *it_set;
+              comparison = pointer->keywords();      
+              if (setIntersection(terms, comparison) == terms)
+              {
+
+                results.push_back(pointer);
+
+              }
 
 
+             }
+        
+            
+
+
+      
+
+
+
+
+    }
+
+     
 
     }
 
@@ -89,14 +125,15 @@
 
     }
 
-
+     return results;
 
   }
 
   /**
    * Reproduce the database file from the current Products and User values
    */
-  void Data::dump(std::ostream& ofile) = 0;
+  void Data::dump(std::ostream& ofile)
+  {
 
 
 

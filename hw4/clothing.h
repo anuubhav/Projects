@@ -1,3 +1,5 @@
+#ifndef CLOTHING_H
+#define CLOTHING_H
 #include <iostream>
 #include <string>
 #include <set>
@@ -23,3 +25,4 @@ class Clothing : public Product{
   std::string info;
 
 };
+#endif
