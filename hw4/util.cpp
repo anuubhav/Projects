@@ -17,25 +17,37 @@ std::set<std::string> parseStringToWords(string rawWord)
 {
 //set of all words
 set<string>words;
-//will hold temporary word
-string holder;
+
+
+//start of new word
+unsigned int start =0;
 
 //go through words and separate into other words
 	for (unsigned int i=0; i< rawWord.size(); i++)
 	{
-		holder.clear();
+		
 
-		if (rawWord[i] == ' ' || ispunct(rawWord[i]))
-		{
-			holder = rawWord.substr(0,i);
-			if (holder.size() >=2)
+		if (i == rawWord.size() -1)
 			{
-				words.insert(holder);
-				
-			}
-		//shorten the rest of the string
-		rawWord = rawWord.substr(i,rawWord.size()-i);	
 
+	
+				words.insert(rawWord.substr(start));
+
+
+			}
+
+		else if (rawWord[i] == ' ' || ispunct(rawWord[i]))
+		{
+			
+			
+				if (rawWord.substr(start,i-start).size()  >=2)
+				{
+				words.insert(rawWord.substr(start, i-start));
+				}
+				
+		
+		
+			start = i+1;
 		}
 
 	}

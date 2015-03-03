@@ -12,7 +12,7 @@ using namespace std;
 class Book : public Product{
 
   public:
-  Book(const std::string category, const std::string name, double price, int qty, const std::string authors_name, const std::string ISBN);
+  Book(const std::string category, const std::string name, double price, int qty, const std::string author, const std::string ISBN);
   std::set<std::string> keywords() const;
   std::string displayString() const;
   void dump(std::ostream& os) const;

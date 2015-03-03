@@ -9,26 +9,25 @@ class ProductParser
  public:
   ProductParser();
 
-  virtual ~ProductParser();gory, const std::string name, double price, int qty, const string si
+  virtual ~ProductParser();
   
 
   Product* parse(std::string category,
-		 std::istream& is,
-		 bool& error,
-		 std::string& errorMsg,
-		 int& lineno);
+     std::istream& is,
+     bool& error,
+     std::string& errorMsg,
+     int& lineno);
 
   void parseCommonProduct(std::istream& is, 
-			  bool& error,
-			  std::string& errorMsg,
-			  int& lineno);
+        bool& error,
+        std::string& errorMsg,
+        int& lineno);
 
   virtual Product* parseSpecificProduct(std::string category,
-					std::istream& is,
-					bool& error,
-					std::string& errorMsg,nst std::string ISBN);
-  std::set<std::string> keywords() const {return keywords_;}
-					int& lineno) = 0;
+          std::istream& is,
+          bool& error,
+          std::string& errorMsg,
+          int& lineno) = 0;
   
   virtual std::string categoryID() = 0;
 
@@ -47,13 +46,10 @@ class ProductBookParser : public ProductParser
  public:
   ProductBookParser();
   Product* parseSpecificProduct(std::string category,
- * Your job to fill in the code to create a new book pr
-				std::istream& is,
- * Your job to fill in the code to create a new book pr
- * Your job to fill in the code to create a new book pr
-				bool& error,
-				std::string& errorMsg,
-				int& lineno);
+        std::istream& is,
+        bool& error,
+        std::string& errorMsg,
+        int& lineno);
   
   std::string categoryID();
 
@@ -71,10 +67,10 @@ class ProductClothingParser : public ProductParser
  public:
   ProductClothingParser();
   Product* parseSpecificProduct(std::string category,
-				std::istream& is,
-				bool& error,
-				std::string& errorMsg,
-				int& lineno);
+        std::istream& is,
+        bool& error,
+        std::string& errorMsg,
+        int& lineno);
   
   std::string categoryID();
 
@@ -92,10 +88,10 @@ class ProductMovieParser : public ProductParser
  public:
   ProductMovieParser();
   Product* parseSpecificProduct(std::string category,
-				std::istream& is,
-				bool& error,
-				std::string& errorMsg,
-				int& lineno);
+        std::istream& is,
+        bool& error,
+        std::string& errorMsg,
+        int& lineno);
   
   std::string categoryID();
 

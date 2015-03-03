@@ -3,28 +3,27 @@ CXXFLAGS=-g -Wall
 # Uncomment for parser DEBUG
 #DEFS=-DDEBUG
 
-OBJS=amazon.o user.o db_parser.o product.o product_parser.o util.o
+OBJS=amazon.o user.o db_parser.o product.o product_parser.o util.o data.o book.o movie.o clothing.o
 
 all: amazon
 
 amazon: $(OBJS)
 	$(CXX) $(CXXFLAGS) $(DEFS) -o $@ $(OBJS)
-btest: btest.cpp book.o product.o
-	$(CXX) $(CXXFLAGS) $(DEFS) -o $@ book.o product.o
 
-#btest.cpp: btest.cpp
-#	$(CXX) $(CXXFLAGS) $(DEFS) btest.cpp
 
 book.o: book.cpp book.h product.h
 	$(CXX) $(CXXFLAGS) $(DEFS) -o $@ -c book.cpp
 
-clothing.o: clothing.cpp product.cpp
+clothing.o: clothing.h clothing.cpp product.h
 	$(CXX) $(CXXFLAGS) $(DEFS) -o $@ -c clothing.cpp
 
-movie.o: movie.cpp product.cpp
+movie.o: movie.h movie.cpp product.h
 	$(CXX) $(CXXFLAGS) $(DEFS) -o $@ -c movie.cpp
 
-amazon.o: amazon.cpp db_parser.h datastore.h product_parser.h 
+data.o: data.cpp data.h datastore.h
+	$(CXX) $(CXXFLAGS) $(DEFS) -o $@ -c data.cpp
+
+amazon.o: amazon.cpp db_parser.h datastore.h product_parser.h data.h
 	$(CXX) $(CXXFLAGS) $(DEFS) -o $@ -c amazon.cpp
 user.o: user.cpp user.h 
 	$(CXX) $(CXXFLAGS) $(DEFS) -o $@ -c user.cpp

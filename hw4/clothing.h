@@ -19,8 +19,8 @@ class Clothing : public Product{
   
 
   protected:
-  string size;
-  string brand;
+  string size_;
+  string brand_;
   std::set<std::string> keywords_;
   std::string info;
 

@@ -10,7 +10,7 @@
 #include "product_parser.h"
 #include "util.h"
 /** Add other #includes here **/
-
+#include "data.h"
 using namespace std;
 
 /* Prototypes */
@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
    * Declare your derived DataStore object here replacing
    *  DataStore type to your derived type
    ****************/
-  DataStore ds;
+  Data ds;
 
 
   // Instantiate the parser
@@ -81,6 +81,88 @@ int main(int argc, char* argv[])
 	}
 	hits = ds.search(terms, 1);
 	displayProducts(hits);	
+      }
+      else if (cmd == "ADD")
+      {
+        string username;
+        int search_hit_number;
+
+
+        ss >> username;
+        ss >> search_hit_number;
+
+      if (hits[search_hit_number-1]->getQty() > 0 )
+      {
+        ds.addToCart(username, hits[search_hit_number-1]);
+      }
+
+      }
+
+
+
+      else if (cmd == "VIEWCART")
+      {
+        string username;
+        ss >> username;
+
+    int item_number = 1;
+  
+            vector<Product*> cart = ds.getCart(username);
+       
+
+           for (unsigned int i=0; i< cart.size(); i++)
+               {
+
+                cout << "Item " << item_number << endl;
+               cout << cart[i]->displayString();
+               item_number++;
+               cout << "\n";
+               }
+        
+ 
+        
+
+
+        
+
+
+
+
+      }
+
+      else if (cmd == "BUYCART")
+      {
+        string username;
+        ss >> username;
+        vector<Product*> cart = ds.getCart(username);
+        User* user = ds.getUser(username);
+
+        for (unsigned int i=0; i< cart.size();)
+        {
+
+
+          double price = cart[i]->getPrice();
+          if (user->getBalance() > price && cart[i]->getQty() > 0)
+          {
+
+            user->deductAmount(price);
+            cart[i]->subtractQty(1);
+           ds.deleteFromCart(user, cart[i]);
+           
+          }
+
+          else
+          {
+
+            ++i;
+
+          }
+
+
+        }
+
+
+
       }
       else if ( cmd == "QUIT"){
 	string filename;

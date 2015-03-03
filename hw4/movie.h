@@ -19,8 +19,8 @@ class Movie : public Product{
   
 
   protected:
-  string genre;
-  string rating;
+  string genre_;
+  string rating_;
   std::set<std::string> keywords_;
   std::string info;
 

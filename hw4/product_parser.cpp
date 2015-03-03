@@ -6,6 +6,7 @@
 #include "book.h"
 #include "clothing.h"
 
+
 using namespace std;
 
 static std::string &trim(std::string &s);

@@ -7,7 +7,8 @@
 #include "util.h"
 #include <queue> 
 #include <map>
-
+#include <list>
+#include <iostream>
 using namespace std;
 /** 
  * DataStore Interface needed for parsing and instantiating products and users
@@ -15,7 +16,32 @@ using namespace std;
  * A derived version of the DataStore can provide other services as well but
  * must support those below
  */
+ Data::Data() :
+    items(),
+    userbase(),
+    carts(),
+    kmap()
+ {
+
+
+ }
   Data::~Data() { 
+
+for (unsigned int i=0; i< items.size(); i++)
+{
+
+    delete items[i];
+
+}
+
+std::set<User*>::iterator s;
+
+for (s = userbase.begin(); s != userbase.end(); ++s)
+{
+
+    delete *s;
+
+}
 
   }
 
@@ -27,6 +53,7 @@ using namespace std;
     items.push_back(p);
 
     set<string> key_holder = p->keywords();
+
     map<string, set<Product*> >::iterator finder;
 
 
@@ -34,10 +61,15 @@ using namespace std;
     {
 
       finder = kmap.find(*it);
+      
       if (finder == kmap.end())
       {
 
-        kmap.insert(make_pair(*it, p ));
+        //products that match the keyword
+        set<Product*> matching_products;
+        matching_products.insert(p);
+        
+        kmap.insert(make_pair(*it, matching_products));
 
 
 
@@ -46,8 +78,8 @@ using namespace std;
 
       else
       {
-
-        //kmap[*finder].insert(p);
+    
+        finder->second.insert(p);
 
 
       }
@@ -61,9 +93,9 @@ using namespace std;
    */
   void Data::addUser(User* u)
   {
-
-    users.insert(make_pair(u, queue<Product*> cart));
-
+    vector<Product*> cart;
+    userbase.insert(u);
+    carts.insert(make_pair(u->getName(), cart));
 
   }
 
@@ -76,54 +108,98 @@ using namespace std;
 
   std::vector<Product*> Data::search(std::vector<std::string>& terms, int type)
   {
-    if (type ==0)
-    {
 
+    //final results in vector form
     vector<Product*> results;
-    set<string> comparison; 
+    
+    //the results in set form
+    set<Product*> s_results;
 
-    map<string,set<Product*> >::iterator it;
+    //to go through the map in general
+    set<string>::iterator it;
+    
+
+    //to go through the map and find keywords
+    map<string,set<Product*> >::iterator it_map;
+
+
+    //to help transform set to vector
     set<Product*>::iterator it_set;
 
-    for (it = kmap.begin(); it != kmap.end(); ++it)
+    //set to hold searched keywords 
+    set<string> k_set;
+
+  /*  for (unsigned int i=0; i< terms.size(); i++)
     {
-      //comparison = it->second.keywords();
-      
-      
-          for (it_set = it->second.begin(); it_set!= it->second.end(); ++it_set)
-             { 
-              Product * pointer = *it_set;
-              comparison = pointer->keywords();      
-              if (setIntersection(terms, comparison) == terms)
-              {
 
-                results.push_back(pointer);
+        k_set.insert(terms[i]);
 
-              }
+    } */
 
+    if (type ==0)
+    {
+        for (unsigned int i=0; i < terms.size(); i++)
+        {
 
-             }
+            if (i==0)
+            {
+
+                s_results = kmap[terms[i]];
+               
+            }
+
+            else 
+            {
+
+                s_results = setIntersection(s_results, kmap[terms[i]]);
+              
+            }
+        }
+
+    
+         
         
-            
-
-
-      
-
-
-
 
     }
+    
 
-     
-
-    }
-
-    else if (type ==1)
+      else if (type ==1)
     {
 
 
+    for (unsigned int i=0; i < terms.size(); i++)
+        {
+
+            if (i==0)
+            {
+
+                s_results = kmap[terms[i]];
+               
+            }
+
+            else 
+            {
+
+                s_results = setUnion(s_results, kmap[terms[i]]);
+              
+            }
+        }
 
     }
+             
+    //make the results set into a vector
+    for (it_set = s_results.begin(); it_set!= s_results.end(); ++it_set)
+    {
+
+
+        results.push_back(*it_set);
+
+
+    }
+
+
+
+        
 
      return results;
 
@@ -135,11 +211,74 @@ using namespace std;
   void Data::dump(std::ostream& ofile)
   {
 
+        for (unsigned int i=0; i< items.size(); i++)
+        {
+
+            items[i]->dump(ofile);
+
+        }
+
+
+    }
+
+  void Data::addToCart(string username, Product* item)
+{
+        carts.find(username)->second.push_back(item);
+
+   
+
+    
+
+
+}
+
+void Data::viewCart(string username)
+{
+
+    
+}
+
+vector<Product*> Data::getCart(string username)
+{
+
+    map<string, vector<Product*> >::iterator it;
+    it = carts.find(username);
+
+    return it->second;
 
 
 
+}
 
-  
+User* Data::getUser(string username)
+{
+
+    set<User*>::iterator it;
+    for (it = userbase.begin(); it!= userbase.end(); ++it)
+    {
+
+        if ((*it)->getName() == username)
+            return (*it);
 
 
-  }
+
+    }
+    return NULL;
+
+
+}
+
+void Data::deleteFromCart(User* user, Product* product)
+{
+    if (carts.find(user->getName()) != carts.end())
+    {
+        std::vector<Product*>::iterator it = find(carts[user->getName()].begin(), carts[user->getName()].end(), product);
+       
+        if (it != carts[user->getName()].end())
+        {
+            carts[user->getName()].erase(it);
+        }
+
+
+    }
+}

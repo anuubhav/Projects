@@ -4,6 +4,8 @@
 #include <set>
 #include <vector>
 #include <map>
+#include <list>
+#include <queue>
 #include "product.h"
 #include "user.h"
 #include "movie.h"
@@ -11,6 +13,8 @@
 #include "book.h"
 #include "datastore.h"
 #include "util.h"
+
+
 /** 
  * DataStore Interface needed for parsing and instantiating products and users
  *
@@ -19,6 +23,7 @@
  */
 class Data: public DataStore {
  public:
+   Data();
   ~Data();
 
   /**
@@ -41,13 +46,23 @@ class Data: public DataStore {
   /**
    * Reproduce the database file from the current Products and User values
    */
-  void dump(std::ostream& ofile) = 0;
+  void dump(std::ostream& ofile);
 
   void keywordMap(map<string, set<Product*> >& kmap);
 
+  void addToCart(string username, Product* item);
+
+  void viewCart(string username);
+
+  vector<Product*> getCart(string username);
+
+  User* getUser(string username);
+
+  void deleteFromCart(User* user, Product* product);
 protected:
 std::vector<Product*> items;
-std::map<User, std::queue<Product*> > users;
+std::set<User*> userbase;
+std::map<string, vector<Product*> > carts;
 std::map<string, set<Product*> > kmap;
 
 };
