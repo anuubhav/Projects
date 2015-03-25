@@ -1,10 +1,19 @@
 #include "main_window.h"
+#include "msort.h"
 #include "data.h"
 #include <string>
 #include <vector>
 #include <sstream>
 #include <fstream>
 #include <iostream>
+
+struct ProdStrComp {
+    bool operator()(Product& lhs, Product& rhs) 
+    { // Uses string's built in operator< 
+      // to do lexicographic (alphabetical) comparison
+      return lhs.getName() < rhs.getName(); 
+    }
+  };
 
 MainWindow::MainWindow(Data* ds_original)
 {
@@ -47,12 +56,22 @@ MainWindow::MainWindow(Data* ds_original)
 
 	//showing the searches
 	searchListWidget = new QListWidget();
-	overallLayout->addWidget(searchListWidget);
+	
 	//set overall layout
 	setLayout(overallLayout);
 	overallLayout->addStretch();
 
-
+	//Alphabetical && Rating Sorting
+	sortLayout = new QHBoxLayout();
+	alphaButton = new QPushButton("Sort Alphabetically");
+	reviewButton = new QPushButton("Sort by Review");
+	sortLayout->addWidget(alphaButton);
+	sortLayout->addWidget(reviewButton);
+	overallLayout->addLayout(sortLayout);
+	connect(alphaButton, SIGNAL(clicked()), this, SLOT(alphaSort()));
+	connect(reviewButton, SIGNAL(clicked()), this, SLOT(reviewSort()));
+	//adding the list after the sort buttons
+	overallLayout->addWidget(searchListWidget);
 }
 
 MainWindow::~MainWindow()
@@ -65,16 +84,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::AndOrSearch()
 {
-	vector<Product*> hits;
 	vector<string> hits_string;
+	hits.clear();
+
 	string searchText = searchTermInput->text().toStdString();
 	stringstream str(searchText);
 	string temp;
+	searchListWidget->clear();
 	while (str >> temp)
 	{
-		
-		
-		cout << "temp is: " << temp << endl;
 		hits_string.push_back(temp);
 
 	}
@@ -111,3 +129,18 @@ void MainWindow::AndOrSearch()
 		
 	}
 } 
+
+void MainWindow::alphaSort()
+{
+	ProdStrComp comp1;
+	mergeSort(hits, comp1);
+
+
+}
+
+void MainWindow::reviewSort()
+{
+
+
+
+}

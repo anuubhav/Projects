@@ -22,9 +22,13 @@ public:
 
 private slots:
 	void AndOrSearch();
+	void alphaSort();
+	void reviewSort();
 
 
 private:
+
+	vector<Product*> hits;
 	//stores all of the data
   	Data* ds;
 
@@ -40,8 +44,10 @@ private:
 	QRadioButton* orButton;
 	QHBoxLayout* andOrLayout;
 	QListWidget* searchListWidget;
-	//list of items
-	//QListWidget* itemListWidget;
+	
+	//sorting
+	QHBoxLayout* sortLayout;
+	QPushButton* alphaButton;
+	QPushButton* reviewButton;
 
-	//form for search
 };
