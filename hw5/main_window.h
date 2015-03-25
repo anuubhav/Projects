@@ -7,6 +7,7 @@
 #include <QRadioButton>
 #include <QListWidget>
 #include <QGroupBox>
+#include <QString>
 #include <string>
 #include <vector>
 #include "data.h"
@@ -20,7 +21,7 @@ public:
 
 
 private slots:
-	//void search();
+	void AndOrSearch();
 
 
 private:
@@ -28,18 +29,19 @@ private:
   	Data* ds;
 
 	//main layout
-	QHBoxLayout* overallLayout;
+	QVBoxLayout* overallLayout;
 
 	//search
-	QVBoxLayout* searchLayout;
+	QHBoxLayout* searchLayout;
 	QLabel* searchTermDisplay;
 	QLineEdit* searchTermInput;
 	QPushButton* searchButton;
 	QRadioButton* andButton;
 	QRadioButton* orButton;
-	QHxLayout* andOrLayout;
+	QHBoxLayout* andOrLayout;
+	QListWidget* searchListWidget;
 	//list of items
-	QListWidget* itemListWidget;
+	//QListWidget* itemListWidget;
 
 	//form for search
 };

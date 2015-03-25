@@ -84,12 +84,10 @@ int main(int argc, char* argv[])
       }
       else if (cmd == "ADD")
       {
-        string username;
-        int search_hit_number;
-
-
-        ss >> username;
-        ss >> search_hit_number;
+      string username;
+      int search_hit_number;
+      ss >> username;
+      ss >> search_hit_number;
 
       if (hits[search_hit_number-1]->getQty() > 0 )
       {
