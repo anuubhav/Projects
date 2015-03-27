@@ -1,6 +1,7 @@
 #ifndef REVIEW_H
 #define REVIEW_H
 #include <string>
+#include <sstream>
 
 /**
  * Models a review for the product identified by prodName
@@ -21,8 +22,24 @@ struct Review
 
   void dump(std::ostream& ofile){
 
-    ofile << prodName << "\n";
-    ofile << rating << " " << date << " " << reviewText << "\n";
+    ofile << prodName << "\n" << rating << " " << date << " " << reviewText << "\n";
+
+  }
+
+  std::string getInfo()
+  {
+  std::stringstream ss;
+  ss << rating;
+  std::string rating_string = ss.str();
+    std::string info = prodName + "\n" + rating_string + " " + date + " " + reviewText + "\n";
+    return info;
+
+  }
+
+  std::string getDate()
+  {
+    return date;
+
 
   }
   

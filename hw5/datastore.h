@@ -35,7 +35,7 @@ class DataStore {
   /**
    * Adds a review
    */
-  virtual void addReview(Review* r) = 0;
+  virtual void addReview(Review* r) = 0 ;
 
   /**
    * Performs a search of products whose keywords match the given "terms"

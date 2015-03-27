@@ -52,8 +52,6 @@ for (s = userbase.begin(); s != userbase.end(); ++s)
   void Data::addProduct(Product* p)
   {
     items.push_back(p);
-    vector<Review*> reviews;
-    rmap.insert(make_pair(p, reviews));
     set<string> key_holder = p->keywords();
 
     map<string, set<Product*> >::iterator finder;
@@ -198,11 +196,6 @@ for (s = userbase.begin(); s != userbase.end(); ++s)
 
 
     }
-
-
-
-        
-
      return results;
 
   }
@@ -233,21 +226,22 @@ for (s = userbase.begin(); s != userbase.end(); ++s)
 
        ofile << "</users>" << "\n";
        ofile << "<reviews>" << "\n";
-       map<Product*, vector<Review*> >::iterator it_m; 
-       for (it_m = rmap.begin(); it_m!= rmap.end(); ++it_m)
+
+       for (unsigned int i=0; i<items.size(); i++)
        {
 
-        for (unsigned int i=0; i< it_m->second.size(); i++)
-        {
+       vector<Review*> v_reviews = items[i]->getReviews();
+         for (unsigned int j=0; j< v_reviews.size(); j++)
+         {
+          v_reviews[j]->dump(ofile);
 
-          it_m->second[i]->dump(ofile);
+         }
 
-        }
-
-
-       }
-      ofile << "</reviews>" << "\n";
-    }
+       } 
+        ofile << "</reviews>" << "\n";
+}
+      
+    
 
   void Data::addToCart(string username, Product* item)
 {
@@ -260,9 +254,13 @@ for (s = userbase.begin(); s != userbase.end(); ++s)
 
 }
 
-void Data::viewCart(string username)
+int Data::getCartSize(string username)
 {
 
+  map<string, vector<Product*> >::iterator it;
+  it = carts.find(username);
+  int answer = it->second.size();
+  return answer;
     
 }
 
@@ -332,15 +330,42 @@ Product* Data::getProduct(Review* r)
 
 void Data::addReview(Review* r)
 {
+  
+  string name = r->prodName;
 
-  Product* p = getProduct(r);
-  map<Product*, vector<Review*> >::iterator it;
-  it = rmap.find(p);
-  if (it != rmap.end())
+  for (unsigned int i=0; i<items.size(); i++)
   {
+    if (items[i]->getName() == name)
+    {
+      Product* p = items[i];
+    p->addReview(r);
 
-    it->second.push_back(r);
-
+    }
   }
 
+
+}
+
+
+
+set<User*> Data::getUsers()
+{
+  return userbase;
+}
+
+
+Product* Data::getProdObj(string title)
+{
+
+  for (unsigned int i=0; i<items.size(); i++)
+  {
+    if (title == items[i]->getName())
+    {
+      return items[i];
+
+    }
+
+
+  }
+return NULL;
 }

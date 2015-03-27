@@ -5,6 +5,7 @@
 #include <set>
 #include <vector>
 #include <algorithm>
+#include "review.h"
 
 class Product{
  public:
@@ -38,12 +39,16 @@ class Product{
   std::string getName() const;
   int getQty() const;
   void subtractQty(int num);
- 
+  std::vector<Review*> getReviews();
+  int getAvgReview();
+  void addReview(Review* r);
  protected:
   std::string name_;
   double price_;
   int qty_;
   std::string category_;
 
+private:
+  std::vector<Review*> reviews_;
 };
 #endif

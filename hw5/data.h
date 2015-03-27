@@ -52,9 +52,9 @@ class Data: public DataStore {
 
   void addToCart(string username, Product* item);
 
-  void viewCart(string username);
+  int getCartSize(string username);
 
-  vector<Product*> getCart(string username);
+  std::vector<Product*> getCart(string username);
 
   User* getUser(string username);
 
@@ -63,11 +63,17 @@ class Data: public DataStore {
   Product* getProduct(Review* r);
 
   void addReview(Review* r);
+  
+  std::set<User*> getUsers();
+  
+  Product* getProdObj(string title);
+  
 protected:
 std::vector<Product*> items; //set of every product
 std::set<User*> userbase; //set of all users
 std::map<string, vector<Product*> > carts; //all user carts
 std::map<string, set<Product*> > kmap; //maps all products that pertain to a keyword
-std::map<Product*, vector<Review*> > rmap; //all products and pertaining reviews
+
+
 };
 #endif

@@ -39,14 +39,56 @@ int Product::getQty() const
   return qty_;
 }
 
+
+vector<Review*> Product::getReviews()
+{
+  return reviews_;
+
+}
+
+int Product::getAvgReview()
+{
+
+  int avgReview =0;
+  for (unsigned int i=0; i< reviews_.size(); i++)
+    {
+      int temp_rating = reviews_[i]->rating;
+      avgReview = avgReview + temp_rating;
+
+
+    }
+
+    int numItems = reviews_.size();
+    
+    // if there are no reviews, don't want to divide by 0!
+    if (numItems ==0)
+    {
+      numItems = 1;
+
+    }
+
+    avgReview = avgReview / numItems;
+
+    return avgReview;
+
+}
+
+void Product::addReview(Review* r)
+{
+
+reviews_.push_back(r);
+
+
+}
 /**
  * default implementation...can be overriden in a future
  * assignment
  */ 
+ 
 bool Product::isMatch(std::vector<std::string>& searchTerms) const
 {
   return false;
-}
+} 
 
 void Product::dump(std::ostream& os) const
 {
