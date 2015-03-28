@@ -16,6 +16,12 @@ Product::Product(const std::string category, const std::string name, double pric
 Product::~Product()
 {
 
+  for (unsigned int i=0; i< reviews_.size(); i++)
+  {
+    delete reviews_[i];
+
+  }
+
 }
 
 

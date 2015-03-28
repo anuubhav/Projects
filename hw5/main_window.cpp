@@ -38,7 +38,7 @@ MainWindow::MainWindow(Data* ds_original)
 	ds = ds_original;
 
 	//Title
-	setWindowTitle("Amazon by Make Jetzman");
+	setWindowTitle("Amazon by Beff Jezos");
 
 	//overall layout
 	overallLayout = new QVBoxLayout();
@@ -167,6 +167,7 @@ MainWindow::MainWindow(Data* ds_original)
 	ratingInput = new QLineEdit();
 	date_label = new QLabel("Date: YYYY-MM-DD");
 	date_input = new QLineEdit();
+	date_input->setMaxLength(10);
 	//dateEdit = new QDateEdit();
 	firstReviewLayout = new QFormLayout();
 	review_label = new QLabel("Review Text");
@@ -185,6 +186,7 @@ MainWindow::MainWindow(Data* ds_original)
 	databaseLabel = new QLabel("Enter Output File");
 	file_input = new QLineEdit();
 	submitFileButton = new QPushButton("Save");
+	saveWarning = new QLabel("Will not save if box is empty");
 
 	endLayout->addWidget(saveButton);
 	endLayout->addWidget(quitButton);
@@ -375,6 +377,56 @@ void MainWindow::checkout()
             ++i;
           }
 	}
+
+
+
+	//refreshing the search
+	vector<string> hits_string;
+	hits.clear();
+
+	string searchText = searchTermInput->text().toStdString();
+	searchText = convToLower(searchText);
+	stringstream str(searchText);
+	string temp;
+	searchListWidget->clear();
+	while (str >> temp)
+	{
+		hits_string.push_back(temp);
+
+	}
+	if (andButton->isChecked())
+	{
+		vector<Product*>::iterator it;
+		
+		//hits_string.push_back(searchText);
+		hits = ds->search(hits_string,0);
+		for (it = hits.begin(); it!= hits.end(); ++it)
+		{
+			
+			string info = (*it)->displayString();
+			searchListWidget->addItem(QString::fromStdString(info));
+
+		}
+	}	
+
+	else if (orButton->isChecked())
+	{
+		vector<Product*>::iterator it;
+		//hits_string.push_back(searchText);
+		hits = ds->search(hits_string, 1);
+
+		for (it = hits.begin(); it!= hits.end(); ++it)
+		{
+			string info = (*it)->displayString();
+			searchListWidget->addItem(QString::fromStdString(info));
+
+		}
+
+		
+	}
+
+	viewCart();
+
 }
 
 void MainWindow::removeFromCart()
@@ -479,6 +531,7 @@ if (QListWidgetItem* item =  searchListWidget->currentItem())
 }
 
 
+
 	
 }
 
@@ -497,6 +550,7 @@ void MainWindow::submitReview()
 	Product* itemToAddReviewFor = ds->getProdObj(title);
 
 	//getting date as a string
+
 	
 	string date_string = date_input->text().toStdString();
 
@@ -520,15 +574,17 @@ void MainWindow::submitReview()
 
 	addReviewLayout->close();
 	//(prodName, rating_i, date_string, reviewText);
+	showReviews();
 }
 
 void MainWindow::saveDatabase()
 {
 
+	
 	saveForm->addWidget(databaseLabel);
 	saveForm->addWidget(file_input);
 	saveForm->addWidget(submitFileButton);
-
+	saveForm->addWidget(saveWarning);
 
 	saveLayout->setLayout(saveForm);
 	saveLayout->show();
@@ -541,11 +597,13 @@ void MainWindow::exportDatabase()
 {
 	//where the database will be
 	string file = file_input->text().toStdString();
-	ofstream ofile(file.c_str());
-	ds->dump(ofile);
-	ofile.close();
-	saveLayout->close();
-
+	if (file.size() != 0)
+	{
+		ofstream ofile(file.c_str());
+		ds->dump(ofile);
+		ofile.close();
+		saveLayout->close();
+	}	
 
 }
 

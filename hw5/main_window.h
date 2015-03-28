@@ -112,4 +112,5 @@ private:
 	QLabel* databaseLabel;
 	QLineEdit* file_input;
 	QPushButton* submitFileButton;
+	QLabel* saveWarning;
 };	
