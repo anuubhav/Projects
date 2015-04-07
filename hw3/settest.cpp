@@ -25,6 +25,8 @@ int main()
 	SetInt set4;
 	SetInt set5;
 	SetInt set6;
+
+	SetInt set7;
 	
 
 	set3 = set.setUnion(set2);
@@ -92,4 +94,6 @@ int main()
 
 
 
+	cout << "This is where i lost all the points" << endl;
+	cout << set7.empty();
 }

@@ -210,14 +210,26 @@ for (s = userbase.begin(); s != userbase.end(); ++s)
    */
   void Data::dump(std::ostream& ofile)
   {
-
+        ofile << "<products>" << "\n";
         for (unsigned int i=0; i< items.size(); i++)
         {
 
             items[i]->dump(ofile);
 
         }
+        ofile << "</products>" << "\n";
+        ofile << "<users" << "\n";
 
+
+       set<User*>::iterator it;
+       for (it = userbase.begin(); it!= userbase.end(); ++it)
+       {
+
+        (*it)->dump(ofile);
+
+       }
+
+       ofile << "</users>" << "\n";
 
     }
 
