@@ -16,7 +16,7 @@ class Board
 
   // ****** Add a copy constructor, destructor, etc. if you need them ****** //
 
-
+  Board(const Board& b);
 
 
   // Swaps the blank with the specified tile value

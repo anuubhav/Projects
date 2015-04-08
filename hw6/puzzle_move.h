@@ -35,7 +35,34 @@ struct PuzzleMoveScoreComp
     // If both have the same f-score, break ties by using 
     // the checking if m1's h-score is less than m2's
 
+    int m1FScore = m1->g + m1->h;
+    int m2FScore = m2->g + m2->h;
 
+    if (m1FScore < m2FScore)
+    {
+      return true;
+
+    }
+
+    else if (m1FScore > m2FScore)
+    {
+      return false;
+
+    }
+
+    else 
+    {
+
+      if (m1->h < m2->h)
+      {
+        return true;
+      }
+      else 
+      {
+        return false;
+      }
+
+    }
 
 
   }
@@ -48,8 +75,11 @@ struct PuzzleMoveBoardComp
     // Add code to check if m1's board is "less-than" m2's board by 
     // using the Board class' operator<()
 
-
-
+    if (m1->b < m2->b)
+      {
+        return true;
+      }
+    else return false;
 
   }
 };

@@ -54,7 +54,32 @@ Board::Board(int dim, int numInitMoves, int seed )
 }
 
 
+Board::~Board()
+{
 
+for (int i=0; i < _tiles.size(); i++)
+  {
+    delete _tiles[i];
+
+  }
+
+
+delete[] _tiles;
+
+}
+Board::Board(const Board& b)
+{
+
+_tiles = new int [b._size];
+_size = b._size;
+
+for (int i=0; i< b._tiles; i++)
+  {
+    _tiles[i] = b._tiles[i];
+
+  }
+
+}
 
 
 void Board::move(int tile)
@@ -93,13 +118,106 @@ void Board::move(int tile)
 // configuration reflecting the move of that tile into the blank spot
 map<int, Board*> Board::potentialMoves() const
 {
-
+  Board* north = new Board(this); //north
+  Board* south = new Board(this); //south
+  Board* east = new Board(this); //east
+  Board* west = new Board(this); //west
   
+
+  for (int i=0; i < _tiles.size(); i++)
+  {
+
+    if (_tiles[i] == 0)
+    {
+      int i = blankSpace; //taylor Swift
+
+    }
+  }
+
+  int dim = dim(); //dimension of the board
+  map<int, Board*> boardMap; //map to be returned
+//North Tile
+if (blankSpace > dim-1)
+  {
+
+  north->move(blankSpace-dim);
+  boardMap.insert(make_pair(blankSpace-dim, north));
+  }
+
+
+//West Tile
+if (blankSpace % dim != 0 || blankSpace == 0)
+  {
+
+  west->move(blankSpace-1);
+  boardMap.insert(make_pair(blankSpace-1, west));
+  }
+
+
+//South Tile
+if (blankSpace < _size - dim)
+  {
+
+  south->move(blankSpace+dim);
+  boardMap.insert(make_pair(blankSpace+dim, south));
+  }
+
+//East Tile
+if (blankSpace % dim != dim-1)
+  {
+
+  east->move(blankSpace+1)
+  boardMap.insert(make_pair(blankSpace+1, east)); 
+  }
 }
 
+friend std::ostream& operator<<(std::ostream &os, const Board &b)
+{
+
+  printRowBanner(os);
+  for (int i=0; i < _size; i++)
+  {
+    if (i % dim == dim-1)
+    {
+      if (_tiles[i] ==0)
+      {
+        os << "\n" << "  " << "|";
+
+      }
+      os << "\n" << " " << _tiles[i] << "|";
+    }
+    else
+    {
+      if (_tiles[i] ==0)
+      {
+
+        os << "  " << "|";
+
+      }
+      os << " " << _tiles[i] << "|";
+    }
+
+  }
+
+}
+
+bool operator<(const Board& rhs) const
+{
+  bool less = false;
+
+  for (int i=0; i < _size; i++)
+  {
+    if (_tiles[i] < rhs._tiles[i])
+    {
+      less = true;
+
+    }
 
 
+  }
 
+return less;
+}
 
 
 
@@ -128,4 +246,24 @@ void Board::printRowBanner(ostream& os) const
     os << "--+";
   }
   os << endl;
+}
+
+
+bool Board::solved() const
+{
+bool ok = true; //checks that the board is fine
+for (int i=1; i < _size; i++)
+{
+  //if each slot in the array is incremented by 1
+  if (_tiles[i] != _tiles[i-1]+1) 
+
+  {
+    ok = false;
+  }
+
+
+}
+
+return ok;
+
 }
