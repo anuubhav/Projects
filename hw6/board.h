@@ -16,6 +16,7 @@ class Board
 
   // ****** Add a copy constructor, destructor, etc. if you need them ****** //
 
+~Board();
   Board(const Board& b);
 
 

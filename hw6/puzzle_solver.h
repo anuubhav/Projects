@@ -5,6 +5,7 @@
 #include "board.h"
 #include "puzzle_move.h"
 #include "puzzle_heur.h"
+#include "heap.h"
 
 
 class PuzzleSolver
@@ -22,7 +23,7 @@ class PuzzleSolver
   // Run the A* search and builds the solution and tracks
   // the number of expansions
   void run();
-
+  
   // Return the solution deque
   std::deque<int> getSolution();
 
@@ -36,3 +37,4 @@ class PuzzleSolver
 };
 
 #endif
+ 

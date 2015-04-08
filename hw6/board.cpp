@@ -56,7 +56,7 @@ Board::Board(int dim, int numInitMoves, int seed )
 
 Board::~Board()
 {
-
+/*
 for (int i=0; i < _tiles.size(); i++)
   {
     delete _tiles[i];
@@ -65,15 +65,15 @@ for (int i=0; i < _tiles.size(); i++)
 
 
 delete[] _tiles;
-
+*/
 }
-Board::Board(const Board& b)
+Board::Board( const Board &b)
 {
 
 _tiles = new int [b._size];
 _size = b._size;
 
-for (int i=0; i< b._tiles; i++)
+for (int i=0; i< b._size; i++)
   {
     _tiles[i] = b._tiles[i];
 
@@ -118,105 +118,139 @@ void Board::move(int tile)
 // configuration reflecting the move of that tile into the blank spot
 map<int, Board*> Board::potentialMoves() const
 {
-  Board* north = new Board(this); //north
-  Board* south = new Board(this); //south
-  Board* east = new Board(this); //east
-  Board* west = new Board(this); //west
-  
+   map<int, Board*> boardMap; //map to be returned
 
-  for (int i=0; i < _tiles.size(); i++)
+  boardMap.clear();
+
+
+
+  
+int blankSpace = 0;
+  for (int i=0; i < _size; i++)
   {
 
     if (_tiles[i] == 0)
     {
-      int i = blankSpace; //taylor Swift
+      blankSpace = i; //taylor Swift
 
     }
   }
 
-  int dim = dim(); //dimension of the board
-  map<int, Board*> boardMap; //map to be returned
-//North Tile
-if (blankSpace > dim-1)
-  {
+  int dimension = dim(); //dimension of the board
 
-  north->move(blankSpace-dim);
-  boardMap.insert(make_pair(blankSpace-dim, north));
+//North Tile
+if (blankSpace > dimension-1)
+  {
+  Board* north = new Board(*this); 
+  int numberToMove = north->_tiles[blankSpace - dimension];
+  north->move(numberToMove);
+  boardMap.insert(make_pair(numberToMove, north));
   }
 
 
 //West Tile
-if (blankSpace % dim != 0 || blankSpace == 0)
+if (blankSpace % dimension != 0 || blankSpace == 0)
   {
-
-  west->move(blankSpace-1);
-  boardMap.insert(make_pair(blankSpace-1, west));
+  Board* west = new Board(*this); //west
+  int numberToMove = west->_tiles[blankSpace - 1];
+  west->move(numberToMove);
+  boardMap.insert(make_pair(numberToMove, west));
   }
 
 
 //South Tile
-if (blankSpace < _size - dim)
+if (blankSpace < _size - dimension)
   {
-
-  south->move(blankSpace+dim);
-  boardMap.insert(make_pair(blankSpace+dim, south));
+  Board* south = new Board(*this);
+  int numberToMove = south->_tiles[blankSpace + dimension];
+  south->move(numberToMove);
+  boardMap.insert(make_pair(numberToMove, south));
   }
 
 //East Tile
-if (blankSpace % dim != dim-1)
+if (blankSpace % dimension != dimension-1)
   {
-
-  east->move(blankSpace+1)
-  boardMap.insert(make_pair(blankSpace+1, east)); 
+  Board* east = new Board(*this);
+  int numberToMove = east->_tiles[blankSpace + 1];
+  east->move(numberToMove);
+  boardMap.insert(make_pair(numberToMove, east)); 
   }
+
+
+  return boardMap;
 }
 
-friend std::ostream& operator<<(std::ostream &os, const Board &b)
+std::ostream& operator<<(std::ostream &os, const Board &b)
 {
-
-  printRowBanner(os);
-  for (int i=0; i < _size; i++)
+  int dimension = b.dim(); //dimension of the board
+  b.printRowBanner(os);
+  for (int i=0; i< (b._size / dimension); i++)
   {
-    if (i % dim == dim-1)
+
+    os << "|";
+    for (int j=0; j< dimension; j++)
     {
-      if (_tiles[i] ==0)
+     if (b[dimension*i + j] != 0) 
       {
-        os << "\n" << "  " << "|";
+        os << " " << b[dimension*i + j] << "|";
+      } 
+     else 
+      {
+        os << "  " << "|";
+      }
+    }
+    os << "\n";
+    b.printRowBanner(os);
+    
+
+
+  }
+
+
+
+
+    /*
+  {
+    if (i % dimension == dimension-1)
+    {
+      if (b[i] ==0)
+      {
+        os << "|" << "\n" << "  " << "|";
 
       }
-      os << "\n" << " " << _tiles[i] << "|";
+      os << "\n" << " " << b[i] << "|";
     }
     else
     {
-      if (_tiles[i] ==0)
+      if (b[i] ==0)  
       {
 
         os << "  " << "|";
 
       }
-      os << " " << _tiles[i] << "|";
+      os << " " << b[i] << "|";
     }
 
-  }
-
+  } */
+return os;
 }
 
-bool operator<(const Board& rhs) const
+bool Board::operator<(const Board& rhs) const
 {
-  bool less = false;
+
 
   for (int i=0; i < _size; i++)
   {
     if (_tiles[i] < rhs._tiles[i])
     {
-      less = true;
+      return true;
 
     }
 
 
   }
 
-return less;
+return false;
 }
 
 

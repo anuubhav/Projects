@@ -48,6 +48,10 @@ class Heap
 };
 
 // Add implementation of member functions here
+template <typename T, typename Comparator>
+Heap<T,Comparator>::~Heap() 
+{}
+
 
 template <typename T, typename Comparator>
 Heap<T,Comparator>::Heap(int m, Comparator c)
