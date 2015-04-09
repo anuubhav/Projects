@@ -1,4 +1,7 @@
 #include "heap.h"
+#include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <iostream>
 #include <functional>
 
@@ -6,33 +9,16 @@ using namespace std;
 
 int main()
 {
+srand(time(NULL));
 
-/*
- Heap<int, less<int> >* h1 = new Heap<int, less<int> >(2, less<int>());
-h1->push(0);
-h1->push(2123);
-h1->push(16);
-h1->push(42);
-h1->push(1);
-h1->push(3);
-h1->push(55);
-h1->push(2);
-h1->push(2116);
-
-
-
-
-for (int i=0; i<9; i++)
+ Heap<int, less<int> >* h2 = new Heap<int, less<int> >(4, less<int>());
+for (int i=0; i < 100; i++)
 {
+	int j= rand() % 1000;
+	h2->push(j);
 
-	cout << i << " number is: " << h1->top() << endl;
-	h1->pop();
 
 }
-
-*/
-
- Heap<int, greater<int> >* h2 = new Heap<int, greater<int> >(5, greater<int>());
 h2->push(3);
 h2->push(2);
 h2->push(3);
@@ -41,8 +27,8 @@ h2->push(6);
 h2->push(1);
 h2->push(7);
 
-	cout << "MAX HEAP" << endl;
-for (int i=0; i< 7; i++)
+	cout << "MIN HEAP" << endl;
+for (int i=0; i< 100; i++)
 {
 
 
@@ -51,7 +37,7 @@ for (int i=0; i< 7; i++)
 }
 
 
-
+/*
 
  Heap<int, less<int> >* h3 = new Heap<int, less<int> >(5, less<int>());
 h3->push(3);
@@ -69,6 +55,6 @@ for (int j=0; j< 7; j++)
 
 	cout << j << " number is: " << h3->top() << endl;
 	h3->pop();
-}
+}*/
  
 }

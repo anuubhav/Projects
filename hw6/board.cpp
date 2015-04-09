@@ -120,7 +120,7 @@ map<int, Board*> Board::potentialMoves() const
 {
    map<int, Board*> boardMap; //map to be returned
 
-  boardMap.clear();
+ // boardMap.clear();
 
 
 
@@ -143,28 +143,37 @@ if (blankSpace > dimension-1)
   {
   Board* north = new Board(*this); 
   int numberToMove = north->_tiles[blankSpace - dimension];
-  north->move(numberToMove);
-  boardMap.insert(make_pair(numberToMove, north));
+  if (numberToMove != 0) 
+    { 
+    north->move(numberToMove);
+    boardMap.insert(make_pair(numberToMove, north));
+    }
   }
 
 
 //West Tile
-if (blankSpace % dimension != 0 || blankSpace == 0)
+if (blankSpace % dimension != 0)
   {
   Board* west = new Board(*this); //west
   int numberToMove = west->_tiles[blankSpace - 1];
-  west->move(numberToMove);
-  boardMap.insert(make_pair(numberToMove, west));
+  if (numberToMove != 0)
+    {
+    west->move(numberToMove);
+    boardMap.insert(make_pair(numberToMove, west));
+    } 
   }
 
 
 //South Tile
-if (blankSpace < _size - dimension)
+if (blankSpace < _size - dimension - 1)
   {
   Board* south = new Board(*this);
   int numberToMove = south->_tiles[blankSpace + dimension];
-  south->move(numberToMove);
-  boardMap.insert(make_pair(numberToMove, south));
+  if (numberToMove != 0)
+    {
+    south->move(numberToMove);
+    boardMap.insert(make_pair(numberToMove, south));
+    }
   }
 
 //East Tile
@@ -172,8 +181,11 @@ if (blankSpace % dimension != dimension-1)
   {
   Board* east = new Board(*this);
   int numberToMove = east->_tiles[blankSpace + 1];
-  east->move(numberToMove);
-  boardMap.insert(make_pair(numberToMove, east)); 
+  if (numberToMove != 0)
+    {
+    east->move(numberToMove);
+    boardMap.insert(make_pair(numberToMove, east)); 
+    }
   }
 
 
@@ -192,7 +204,14 @@ std::ostream& operator<<(std::ostream &os, const Board &b)
     {
      if (b[dimension*i + j] != 0) 
       {
+        if (b[dimension*i + j] >= 10)
+        {     
+            os << b[dimension*i + j] << "|";
+          }
+        else
+        {
         os << " " << b[dimension*i + j] << "|";
+        }
       } 
      else 
       {
@@ -207,31 +226,6 @@ std::ostream& operator<<(std::ostream &os, const Board &b)
   }
 
 
-
-
-    /*
-  {
-    if (i % dimension == dimension-1)
-    {
-      if (b[i] ==0)
-      {
-        os << "|" << "\n" << "  " << "|";
-
-      }
-      os << "\n" << " " << b[i] << "|";
-    }
-    else
-    {
-      if (b[i] ==0)  
-      {
-
-        os << "  " << "|";
-
-      }
-      os << " " << b[i] << "|";
-    }
-
-  } */
 return os;
 }
 
@@ -246,7 +240,10 @@ bool Board::operator<(const Board& rhs) const
       return true;
 
     }
-
+    if(_tiles[i] > rhs._tiles[i])
+    {
+      return false;
+    }
 
   }
 

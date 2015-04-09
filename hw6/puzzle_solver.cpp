@@ -6,7 +6,7 @@ using namespace std;
   //  Also takes a PuzzleHeuristic which will score boards
   PuzzleSolver::PuzzleSolver(const Board &b, PuzzleHeuristic* ph): _b(b), _ph(ph)
   {
-
+  	_expansions = 0;
   }
 
   // Destructor
@@ -23,39 +23,48 @@ using namespace std;
   	PuzzleMove* current = new PuzzleMove(&_b);
   	//closed list
 	PuzzleMoveScoreComp comp1;
-  	 PuzzleMoveSet closed_list;
+	PuzzleMoveBoardComp comp2;
+  	 PuzzleMoveSet closed_list(comp2);
 
 
 
 	//open list
- 	Heap<PuzzleMove*, PuzzleMoveScoreComp> open_list(4, comp1);
+ 	Heap<PuzzleMove*, PuzzleMoveScoreComp> open_list(2, comp1);
   	open_list.push(current);
   	closed_list.insert(current);
 
-  	while (_b.solved() == false)
+  	while (current->b->solved() == false)
   	{
-  		map<int, Board*> potentialMoves =  current->b->potentialMoves();
+  		map<int, Board*> potentialMoves = current->b->potentialMoves();
   		map<int, Board*>::iterator it;
   		for (it = potentialMoves.begin(); it!= potentialMoves.end(); ++it)
   		{
   			PuzzleMove* currentPotentialMove = new PuzzleMove(it->first, it->second, current);
+			currentPotentialMove->h = _ph->compute(*currentPotentialMove->b);
   			 PuzzleMoveSet::iterator it_two;
-  			it_two = closed_list.find(currentPotentialMove);
-  			if (it_two == closed_list.end())
+  			 int sizeBefore = closed_list.size();
+  			 closed_list.insert(currentPotentialMove);
+  			 int sizeAfter = closed_list.size();
+
+
+  			 
+  			//check that the boards aren't equal
+  	
+  			if (sizeAfter > sizeBefore)
   			{
   				open_list.push(currentPotentialMove);
-
+  				_expansions++;
   			} 
 
   		}
 
   		current = open_list.top();
   		open_list.pop();
-
   	}
 
   	while (current->prev != NULL)
   	{
+
   		_solution.push_front(current->tileMove);
   		current = current->prev;
   	}
@@ -76,5 +85,5 @@ return _solution;
   {
 
 
-  	return 0;
+  	return _expansions;
   }

@@ -5,7 +5,7 @@ using namespace std;
 PuzzleMove::PuzzleMove(Board* board)
   {
 
-  	 tileMove = -1;
+  	 //tileMove = -1;
   	 b = board;
   	 g = 0;
   	 h = 0;
@@ -35,5 +35,5 @@ PuzzleMove::~PuzzleMove()
 {
 
 
-	
+	delete b;
 }

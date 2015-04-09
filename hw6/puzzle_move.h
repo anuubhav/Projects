@@ -43,16 +43,13 @@ struct PuzzleMoveScoreComp
       return true;
 
     }
-
     else if (m1FScore > m2FScore)
     {
       return false;
 
     }
-
     else 
     {
-
       if (m1->h < m2->h)
       {
         return true;
@@ -75,7 +72,7 @@ struct PuzzleMoveBoardComp
     // Add code to check if m1's board is "less-than" m2's board by 
     // using the Board class' operator<()
 
-    if (m1->b < m2->b)
+    if (*(m1->b) < *(m2->b))
       {
         return true;
       }

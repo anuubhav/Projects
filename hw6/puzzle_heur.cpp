@@ -7,7 +7,7 @@ using namespace std;
 int PuzzleManhattanHeuristic::compute(const Board& b)
 {
 	int dim = b.dim();
-	int numTiles = dim * dim -1; 
+	int numTiles = dim * dim; 
 	int manhattanDistance = 0;
 	for (int i=0; i < numTiles; i++)
 		{
@@ -26,11 +26,11 @@ int PuzzleManhattanHeuristic::compute(const Board& b)
 int PuzzleOutOfPlaceHeuristic::compute(const Board& b)
 {
 	int dim = b.dim();
-	int numTiles = dim * dim -1; 
+	int numTiles = dim * dim; 
 	int numTilesOutOfPlace = 0;
 	for (int i=0; i < numTiles; i++)
 		{
-			if (b[i] != i+1)
+			if (b[i] != i)
 			{
 				numTilesOutOfPlace++;
 
