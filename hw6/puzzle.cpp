@@ -79,7 +79,7 @@ else
 		PuzzleSolver solution(b, comp);
 		solution.run();
 		deque<int> answers = solution.getSolution();
-		cout << "Try this sequence:" << endl;
+		cout << "Try this sequence: ";
 		for (unsigned int i=0; i<answers.size(); i++)
 		{
 			cout << answers[i] << " ";
@@ -99,6 +99,14 @@ else
 		b->move(input);
 		cout << *b;
 		cout << "Enter tile number to move or -1 for a cheat: ";
+		if (b->solved() == true)
+		{
+			cout << endl;
+			cout << *b;
+			cout << endl;
+			return 0;
+
+		}
 	}
 
 	else
