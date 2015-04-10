@@ -85,7 +85,7 @@ Board& Board::operator=(const Board& b)
   }
   if (_tiles)
   {
-    delete _tiles;
+    delete[] _tiles;
 
   }
 

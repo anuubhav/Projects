@@ -15,7 +15,7 @@ class PuzzleSolver
 
   // Constructor (makes a copy of the Board and stores it in b_)
   //  Also takes a PuzzleHeuristic which will score boards
-  PuzzleSolver(const Board &b, PuzzleHeuristic* ph);
+  PuzzleSolver( Board  * b, PuzzleHeuristic* ph);
 
   // Destructor
   ~PuzzleSolver();
@@ -30,7 +30,7 @@ class PuzzleSolver
   // Return how many expansions were performed in the search
   int getNumExpansions();
  private:
-  Board _b;
+  Board* _b;
   std::deque<int> _solution;
   int _expansions;
   PuzzleHeuristic *_ph;

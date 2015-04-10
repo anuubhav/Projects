@@ -58,9 +58,9 @@ else
 
 }
 
-  Board b(dimension, initMoves, seed);
+  Board *b = new Board(dimension, initMoves, seed);
 
-  cout << b;
+  cout << *b;
   cout << "Enter tile number to move or -1 for a cheat: ";
 
 
@@ -71,14 +71,14 @@ else
 
 	if (input ==0)
 	{
-
+		return 0;
 
 	}
 	else if (input == -1)
 	{
-		PuzzleSolver* solution = new PuzzleSolver(b, comp);
-		solution->run();
-		deque<int> answers = solution->getSolution();
+		PuzzleSolver solution(b, comp);
+		solution.run();
+		deque<int> answers = solution.getSolution();
 		cout << "Try this sequence:" << endl;
 		for (unsigned int i=0; i<answers.size(); i++)
 		{
@@ -86,28 +86,30 @@ else
 
 		}
 		cout << endl;
-		int numExpansions = solution->getNumExpansions();
+		int numExpansions = solution.getNumExpansions();
 		cout << "(Expansions = " << numExpansions << ")" << endl;
-		cout << b;
+		cout << *b;
+		cout << "Enter tile number to move or -1 for a cheat: ";
 		//delete solution;
 
 	}
 	else if (input > 0 && input < dimension*dimension)
 
 	{
-		b.move(input);
-		cout << b;
-		cout << "Enter tile number to move or -1 for a cheat: " << endl;
+		b->move(input);
+		cout << *b;
+		cout << "Enter tile number to move or -1 for a cheat: ";
 	}
 
 	else
 	{
 
-
+		
 	}
 }
 
 delete comp0;
 delete comp1;
 delete comp2;
+delete b;
 }

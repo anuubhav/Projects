@@ -4,7 +4,7 @@
 using namespace std;
 // Constructor (makes a copy of the Board and stores it in b_)
   //  Also takes a PuzzleHeuristic which will score boards
-  PuzzleSolver::PuzzleSolver(const Board &b, PuzzleHeuristic* ph): _b(b), _ph(ph)
+  PuzzleSolver::PuzzleSolver( Board * b, PuzzleHeuristic* ph): _b(b), _ph(ph)
   {
   	_expansions = 0;
   }
@@ -20,7 +20,7 @@ using namespace std;
   void PuzzleSolver::run()
   {
   	//original board
-  	PuzzleMove* current = new PuzzleMove(&_b);
+  	PuzzleMove* current = new PuzzleMove(new Board(*_b));
   	//closed list
 	PuzzleMoveScoreComp comp1;
 	PuzzleMoveBoardComp comp2;
@@ -42,7 +42,7 @@ using namespace std;
   		for (it = potentialMoves.begin(); it!= potentialMoves.end(); ++it)
   		{
   			PuzzleMove* currentPotentialMove = new PuzzleMove(it->first, it->second, current);
-			currentPotentialMove->h = _ph->compute(*currentPotentialMove->b);
+			currentPotentialMove->h = _ph->compute(*it->second);
 
   			 
   			if (closed_list.find(currentPotentialMove) == closed_list.end())
@@ -77,8 +77,10 @@ using namespace std;
 
   	//delete current;
   	PuzzleMoveSet::iterator it2;
+  
   	for (it2 = closed_list.begin(); it2 != closed_list.end(); ++it2)
   	{
+  
   		delete *it2;
 
   	}
