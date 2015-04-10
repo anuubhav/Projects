@@ -56,16 +56,10 @@ Board::Board(int dim, int numInitMoves, int seed )
 
 Board::~Board()
 {
-/*
-for (int i=0; i < _tiles.size(); i++)
-  {
-    delete _tiles[i];
-
-  }
 
 
 delete[] _tiles;
-*/
+
 }
 Board::Board( const Board &b)
 {
@@ -78,6 +72,32 @@ for (int i=0; i< b._size; i++)
     _tiles[i] = b._tiles[i];
 
   }
+
+}
+
+Board& Board::operator=(const Board& b)
+{
+
+  if (this == &b)
+  {
+    return *this;
+
+  }
+  if (_tiles)
+  {
+    delete _tiles;
+
+  }
+
+  _tiles = new int[b._size];
+  _size = b._size;
+  for (int i=0; i < b._size; i++)
+  {
+  _tiles[i] = b._tiles[i];
+  }
+
+return *this;
+
 
 }
 
@@ -138,19 +158,35 @@ int blankSpace = 0;
 
   int dimension = dim(); //dimension of the board
 
-//North Tile
-if (blankSpace > dimension-1)
+
+
+
+//South Tile
+if (blankSpace < _size - dimension)
   {
-  Board* north = new Board(*this); 
-  int numberToMove = north->_tiles[blankSpace - dimension];
-  if (numberToMove != 0) 
-    { 
-    north->move(numberToMove);
-    boardMap.insert(make_pair(numberToMove, north));
+  Board* south = new Board(*this);
+  int numberToMove = south->_tiles[blankSpace + dimension];
+  if (numberToMove != 0)
+    {
+    south->move(numberToMove);
+    boardMap.insert(make_pair(numberToMove, south));
     }
   }
 
+ 
 
+//East Tile
+if (blankSpace % dimension != dimension-1)
+  {
+  Board* east = new Board(*this);
+  int numberToMove = east->_tiles[blankSpace + 1];
+  if (numberToMove != 0)
+    {
+    east->move(numberToMove);
+    boardMap.insert(make_pair(numberToMove, east)); 
+    }
+  }
+ 
 //West Tile
 if (blankSpace % dimension != 0)
   {
@@ -164,31 +200,17 @@ if (blankSpace % dimension != 0)
   }
 
 
-//South Tile
-if (blankSpace < _size - dimension - 1)
+//North Tile
+if (blankSpace > dimension-1)
   {
-  Board* south = new Board(*this);
-  int numberToMove = south->_tiles[blankSpace + dimension];
-  if (numberToMove != 0)
-    {
-    south->move(numberToMove);
-    boardMap.insert(make_pair(numberToMove, south));
+  Board* north = new Board(*this); 
+  int numberToMove = north->_tiles[blankSpace - dimension];
+  if (numberToMove != 0) 
+    { 
+    north->move(numberToMove);
+    boardMap.insert(make_pair(numberToMove, north));
     }
   }
-
-//East Tile
-if (blankSpace % dimension != dimension-1)
-  {
-  Board* east = new Board(*this);
-  int numberToMove = east->_tiles[blankSpace + 1];
-  if (numberToMove != 0)
-    {
-    east->move(numberToMove);
-    boardMap.insert(make_pair(numberToMove, east)); 
-    }
-  }
-
-
   return boardMap;
 }
 

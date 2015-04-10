@@ -18,7 +18,7 @@ class Board
 
 ~Board();
   Board(const Board& b);
-
+  Board& operator=(const Board& b);
 
   // Swaps the blank with the specified tile value
   void move(int tile);

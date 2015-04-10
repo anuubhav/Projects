@@ -15,8 +15,10 @@ int PuzzleManhattanHeuristic::compute(const Board& b)
 			int currentCol = i%dim;
 			int desiredRow = b[i] / dim;
 			int desiredCol = b[i] % dim;
-			manhattanDistance += (abs(currentRow - desiredRow) + abs(currentCol - 
+			if (b[i] != 0)
+			{ manhattanDistance += (abs(currentRow - desiredRow) + abs(currentCol - 
 			desiredCol));
+			}
 
 		}
 

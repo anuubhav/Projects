@@ -88,7 +88,8 @@ else
 		cout << endl;
 		int numExpansions = solution->getNumExpansions();
 		cout << "(Expansions = " << numExpansions << ")" << endl;
-
+		cout << b;
+		//delete solution;
 
 	}
 	else if (input > 0 && input < dimension*dimension)
@@ -105,4 +106,8 @@ else
 
 	}
 }
+
+delete comp0;
+delete comp1;
+delete comp2;
 }

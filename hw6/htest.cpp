@@ -19,13 +19,7 @@ for (int i=0; i < 100; i++)
 
 
 }
-h2->push(3);
-h2->push(2);
-h2->push(3);
-h2->push(4);
-h2->push(6);
-h2->push(1);
-h2->push(7);
+
 
 	cout << "MIN HEAP" << endl;
 for (int i=0; i< 100; i++)
