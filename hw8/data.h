@@ -67,11 +67,11 @@ class Data: public DataStore {
   std::set<User*> getUsers();
   
   Product* getProdObj(string title);
-  std::set<User*> userbase; //set of all users
+
   
 protected:
 std::vector<Product*> items; //set of every product
-
+std::set<User*> userbase; //set of all users
 std::map<string, vector<Product*> > carts; //all user carts
 std::map<string, set<Product*> > kmap; //maps all products that pertain to a keyword
 

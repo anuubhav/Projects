@@ -42,6 +42,7 @@ private slots:
 	void showProgram();
 	void addUser();
 	void login();
+	void closeInfo();
 private:
 
 	vector<Product*> hits;
@@ -61,6 +62,13 @@ private:
   	QPushButton* newUserButton;
   	QMessageBox* nonUniqueUser;
   	QMessageBox* wrongPassword;
+  	QWidget* infoInput;
+  	QVBoxLayout* infoLayout;
+  	QLabel* ageLabel;
+  	QLineEdit* ageInput;
+  	QLabel* creditLabel;
+  	QLineEdit* creditInput;
+  	QPushButton* enterInfoButton;
 	//main layout
 	QWidget* programLayout;
 	QVBoxLayout* overallLayout;

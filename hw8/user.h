@@ -21,6 +21,8 @@ class User{
   int hashPassword(std::string passwordInput);
   void setPassword(int password);
   int getPassword();
+  void setAge(int age);
+  void setBalance(double balance);
  private:
   std::string name_;
   int age_;

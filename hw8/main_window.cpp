@@ -49,6 +49,20 @@ MainWindow::MainWindow(Data* ds_original)
 	passwordLabel = new QLabel("Enter Password");
 	nonUniqueUser = new QMessageBox();
 	wrongPassword = new QMessageBox();
+	infoInput = new QWidget();
+	infoLayout = new QVBoxLayout();
+	ageLabel = new QLabel("Enter Age");
+	ageInput = new QLineEdit();
+	creditLabel = new QLabel("Enter Credit Amount");
+	creditInput = new QLineEdit();
+	enterInfoButton = new QPushButton("Enter");
+
+	infoInput->setLayout(infoLayout);
+	infoLayout->addWidget(ageLabel);
+	infoLayout->addWidget(ageInput);
+	infoLayout->addWidget(creditLabel);
+	infoLayout->addWidget(creditInput);
+	infoLayout->addWidget(enterInfoButton);
 
 	//setting text of message boxes
 	nonUniqueUser->setText("Username already exists in the database. Please try again.");
@@ -79,7 +93,9 @@ MainWindow::MainWindow(Data* ds_original)
   	connect(loginButton, SIGNAL(clicked()), this, SLOT(login()));
 	connect(quitLoginButton, SIGNAL(clicked()), this, SLOT(quitProgram()));
 	connect(newUserButton, SIGNAL(clicked()), this, SLOT(addUser()));
-	
+	connect(enterInfoButton, SIGNAL(clicked()), this, SLOT(closeInfo()));
+
+
 	//set overall layout
 	setLayout(loginLayout);
 	loginLayout->addStretch();
@@ -668,7 +684,7 @@ void MainWindow::addUser()
 
 bool uniqueUser = true;
 
-
+	
 set<User*>::iterator it;
 	for (it = allUsers.begin(); it != allUsers.end(); ++it)
 	{
@@ -690,7 +706,9 @@ if (uniqueUser == false)
 //creating a unique user
 else	
 	{
-		//User* newUser = new User();
+
+		infoInput->show();
+		
 
 	}	
 }
@@ -702,8 +720,9 @@ string password = passwordInput->text().toStdString();
 //bool userExists = false;	
 set<User*>::iterator it;
 User* desiredUser;
+allUsers = ds->getUsers();
 
-	for (it = ds->userbase.begin(); it != ds->userbase.end(); ++it)
+	for (it = allUsers.begin(); it !=allUsers.end(); ++it)
 	{
 		
 		if ((*it)->getName() == username)
@@ -726,5 +745,24 @@ User* desiredUser;
 
 
 
+
+}
+
+void MainWindow::closeInfo()
+{
+	allUsers = ds->getUsers();
+	cout << "num users is: " << allUsers.size() << endl;
+	string password = passwordInput->text().toStdString();
+	int age = ageInput->text().toInt();
+	double creditAmount = creditInput->text().toDouble();
+	User* newUser = new User();
+	int hashedPassword = newUser->hashPassword(password);
+	newUser->setPassword(hashedPassword);
+	newUser->setAge(age);
+	newUser->setBalance(creditAmount);
+	ds->addUser(newUser);
+	allUsers = ds->getUsers();
+	cout << "num users is: " << allUsers.size() << endl;
+	infoInput->close();
 
 }

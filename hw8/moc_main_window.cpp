@@ -22,7 +22,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      16,   14, // methods
+      17,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -46,6 +46,7 @@ static const uint qt_meta_data_MainWindow[] = {
      189,   11,   11,   11, 0x08,
      203,   11,   11,   11, 0x08,
      213,   11,   11,   11, 0x08,
+     221,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -57,6 +58,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "addReview()\0submitReview()\0saveDatabase()\0"
     "exportDatabase()\0quitProgram()\0"
     "showProgram()\0addUser()\0login()\0"
+    "closeInfo()\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -81,6 +83,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 13: _t->showProgram(); break;
         case 14: _t->addUser(); break;
         case 15: _t->login(); break;
+        case 16: _t->closeInfo(); break;
         default: ;
         }
     }
@@ -119,9 +122,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 16)
+        if (_id < 17)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 16;
+        _id -= 17;
     }
     return _id;
 }

@@ -89,3 +89,16 @@ int User::getPassword()
 
 	return encryptedPassword;
 }
+
+void User::setAge(int age)
+{
+
+	age_ = age;
+
+}
+
+void User::setBalance(double balance)
+{
+	balance_ = balance;
+
+}
