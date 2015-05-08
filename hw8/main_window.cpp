@@ -1,6 +1,7 @@
 #include "main_window.h"
 #include "msort.h"
 #include "data.h"
+#include "user.h"
 #include <string>
 #include <vector>
 #include <set>
@@ -736,9 +737,10 @@ void MainWindow::closeInfo()
 	newUser->setAge(age);
 	newUser->setBalance(creditAmount);
 	newUser->setName(name);
-	HashTable* temp = ds->getHash();
-	temp->insert(name, newUser);
+	//newUser->setType(0);
 
+	ds->getHash()->insert(name, newUser);
+	ds->addUser(newUser);
 	infoInput->close();
 
 }
