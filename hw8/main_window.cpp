@@ -229,23 +229,26 @@ void MainWindow::viewCart()
 
 	vector<Product*>cart = ds->getCart(user);
 	vector<Product*>::iterator it;
-	for (it = cart.begin(); it!= cart.end(); ++it)
-		{
-			
-			string info = (*it)->displayString();
-			viewCartList->addItem(QString::fromStdString(info));
-
-		}
+	if (cart.size() != 0)
+	{
+		for (it = cart.begin(); it!= cart.end(); ++it)
+			{
+				
+				string info = (*it)->displayString();
+				viewCartList->addItem(QString::fromStdString(info));
 	
-
-	//layout of the widget
-	FirstCartLayout->addWidget(viewCartDisplay);
-	FirstCartLayout->addWidget(viewCartList);
-	SecondCartLayout->addWidget(checkoutButton);
-	SecondCartLayout->addWidget(deleteItemButton);
-	FirstCartLayout->addLayout(SecondCartLayout);
-	viewCartLayout->setLayout(FirstCartLayout);
-	viewCartLayout->show();
+			}
+		
+	
+		//layout of the widget
+		FirstCartLayout->addWidget(viewCartDisplay);
+		FirstCartLayout->addWidget(viewCartList);
+		SecondCartLayout->addWidget(checkoutButton);
+		SecondCartLayout->addWidget(deleteItemButton);
+		FirstCartLayout->addLayout(SecondCartLayout);
+		viewCartLayout->setLayout(FirstCartLayout);
+		viewCartLayout->show();
+	}
 }
 
 void MainWindow::checkout()
