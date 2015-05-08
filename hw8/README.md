@@ -18,9 +18,7 @@ Note: the 1 specifies hash table usage. I was intending to do other bells and wh
 Note: The format of the thesaurus should be as follows:
 
 keyword1 synonym1 synonym2 synonym3
-
 keyword2 synonym1 synonym2 synonym3
-
 keyword3 synonym1 synonym2 synonym3
 
 The keywords should be words that are in the names of products in the database used.
