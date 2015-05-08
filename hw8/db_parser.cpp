@@ -216,10 +216,18 @@ Review* DBParser::parseReview(istream& is, string prodname)
   string date;
   string review_text;
   string line;
+  string username;
   is >> rating;
   if( is.fail() || (rating < 1 || rating > 5) ){
     error_ = true;
     errorMsg_ = "Unable to read rating";
+  }
+
+  is >> username;
+  if (is.fail() ){
+    error_ = true;
+    errorMsg_ = "Unable to read username";
+
   }
   is >> date;
   if( is.fail() ){
@@ -243,14 +251,14 @@ Review* DBParser::parseReview(istream& is, string prodname)
     return NULL;
   }
   else {
-    return makeReview(prodname, rating, date, review_text);
+    return makeReview(prodname, rating, username, date, review_text);
   }
 
 }
 
-Review* DBParser::makeReview(string& prodname, int& rating, string& date, string& review_text)
+Review* DBParser::makeReview(string& prodname, int& rating, string &username, string& date, string& review_text)
 {
-  return new Review(prodname, rating, date, review_text);
+  return new Review(prodname, rating, username, date, review_text);
 }
 
 

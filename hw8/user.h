@@ -23,6 +23,7 @@ class User{
   int getPassword();
   void setAge(int age);
   void setBalance(double balance);
+  void setName(std::string name);
  private:
   std::string name_;
   int age_;

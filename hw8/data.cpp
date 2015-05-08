@@ -10,6 +10,11 @@
 #include <map>
 #include <list>
 #include <iostream>
+#include <sstream>
+#include <iomanip>
+#include <fstream>
+#include <stdio.h>
+#include <ctype.h>
 using namespace std;
 /** 
  * DataStore Interface needed for parsing and instantiating products and users
@@ -17,12 +22,21 @@ using namespace std;
  * A derived version of the DataStore can provide other services as well but
  * must support those below
  */
- Data::Data() :
+ Data::Data(char* input) :
     items(),
     userbase(),
     carts(),
     kmap()
  {
+
+
+    if (input[0] == '1')
+    {
+      users = new HashTable(283);
+
+    }
+
+  
 
 
  }
@@ -54,32 +68,30 @@ for (s = userbase.begin(); s != userbase.end(); ++s)
     items.push_back(p);
     set<string> key_holder = p->keywords();
 
-    map<string, set<Product*> >::iterator finder;
+    //map<string, set<Product*> >::iterator finder;
 
 
     for (set<string>::iterator it=key_holder.begin(); it!=key_holder.end(); ++it)
     {
 
-      finder = kmap.find(*it);
+     // finder = kmap.find(*it);
       
-      if (finder == kmap.end())
+      if (kmap.find(*it) == NULL)
+      //if (finder == kmap.end())
       {
+
 
         //products that match the keyword
         set<Product*> matching_products;
         matching_products.insert(p);
-        
         kmap.insert(make_pair(*it, matching_products));
-
-
-
 
       }
 
       else
       {
     
-        finder->second.insert(p);
+        kmap.find(*it)->getItem().second.insert(p);
 
 
       }
@@ -96,6 +108,10 @@ for (s = userbase.begin(); s != userbase.end(); ++s)
     vector<Product*> cart;
     userbase.insert(u);
     carts.insert(make_pair(u->getName(), cart));
+
+    users->insert(u->getName(), u);
+
+
 
   }
 
@@ -129,12 +145,9 @@ for (s = userbase.begin(); s != userbase.end(); ++s)
     //set to hold searched keywords 
     set<string> k_set;
 
-  /*  for (unsigned int i=0; i< terms.size(); i++)
-    {
+    set<Product*>::iterator itTwo;
+    map<string, set<Product*> >::iterator smapIt;
 
-        k_set.insert(terms[i]);
-
-    } */
 
     if (type ==0)
     {
@@ -143,15 +156,69 @@ for (s = userbase.begin(); s != userbase.end(); ++s)
 
             if (i==0)
             {
+                smapIt = smap.find(terms[i]);
 
-                s_results = kmap[terms[i]];
+                if (smapIt != smap.end() && kmap.find(terms[i]) != NULL)
+                {
+                   s_results = kmap.find(terms[i])->getValue();
+                   
+                   for (itTwo = smapIt->second.begin(); itTwo != smapIt->second.end(); ++itTwo)
+                   {
+                    s_results.insert(*itTwo);
+
+                   }
+
+                }
+                else if (smapIt != smap.end())
+                {
+                  s_results = smapIt->second;  
+      
+
+                }
+                
+                else
+                {
+              
+                if (kmap.find(terms[i]) != NULL)
+                  {
+                    s_results = kmap.find(terms[i])->getValue();
+                  }
+                }
+               
                
             }
 
-            else 
+                //past the first search term
+                else 
             {
+            
+                set<Product*> temp;
+                  smapIt = smap.find(terms[i]);
 
-                s_results = setIntersection(s_results, kmap[terms[i]]);
+                  if (smapIt != smap.end() && kmap.find(terms[i]) != NULL)
+                {
+                   temp = kmap.find(terms[i])->getValue();
+                  
+                   for (itTwo = smapIt->second.begin(); itTwo != smapIt->second.end(); ++itTwo)
+                   {
+                    temp.insert(*itTwo);
+
+                   }
+
+                }
+                else if (smapIt != smap.end())
+                {
+                 temp = smapIt->second;  
+                }
+                
+                else
+                {
+                  if (kmap.find(terms[i]) != NULL)
+                  {
+                temp = kmap.find(terms[i])->getValue();
+              }
+                }
+                s_results = setIntersection(s_results, temp);
               
             }
         }
@@ -172,15 +239,65 @@ for (s = userbase.begin(); s != userbase.end(); ++s)
 
             if (i==0)
             {
+                smapIt = smap.find(terms[i]);
 
-                s_results = kmap[terms[i]];
-               
+                if (smapIt != smap.end() && kmap.find(terms[i]) != NULL)
+                {
+                   s_results = kmap.find(terms[i])->getValue();
+                  
+                   for (itTwo = smapIt->second.begin(); itTwo != smapIt->second.end(); ++itTwo)
+                   {
+                    s_results.insert(*itTwo);
+
+                   }
+
+                }
+
+                else if (smapIt != smap.end())
+                {
+                  s_results = smapIt->second;  
+         
+                }
+                
+                else
+                {
+             
+            if (kmap.find(terms[i]) != NULL)
+                  {s_results = kmap.find(terms[i])->getValue();
+                  }
+                }
             }
 
             else 
             {
+                set<Product*> temp;
+                  smapIt = smap.find(terms[i]);
+                
+                if (smapIt != smap.end() && kmap.find(terms[i]) != NULL)
+                {
+                   temp = kmap.find(terms[i])->getValue();
+                  
+                   for (itTwo = smapIt->second.begin(); itTwo != smapIt->second.end(); ++itTwo)
+                   {
+                    temp.insert(*itTwo);
 
-                s_results = setUnion(s_results, kmap[terms[i]]);
+                   }
+
+                }
+
+                if (smapIt != smap.end())
+                {
+                   temp = smapIt->second;  
+                }
+                
+                else
+                {
+                  if (kmap.find(terms[i]) != NULL)
+                  {
+                 temp = kmap.find(terms[i])->getValue();
+               }
+                }
+                s_results = setUnion(s_results,  temp);
               
             }
         }
@@ -369,3 +486,76 @@ Product* Data::getProdObj(string title)
   }
 return NULL;
 }
+
+
+HashTable* Data::getHash()
+{
+
+  return users;
+}
+
+
+void Data::getSynonyms(string filename)
+{
+
+  string currentLine;
+  string keyword;
+  string synonym;
+  map<string, set<Product*> >::iterator it;
+  set<Product*>::iterator itSet;
+
+
+  ifstream in_file(filename.c_str());
+  if (in_file.fail())
+  {
+    return;
+
+  }
+
+
+  while (getline(in_file, currentLine))
+  {
+
+    stringstream ss(currentLine);
+    ss >> keyword;
+
+    //making keyword lowercase
+    for (unsigned int i=0; i < keyword.size(); i++)
+    {
+      keyword[i] = tolower(keyword[i]);
+
+    }
+
+    while (ss >> synonym)
+    {
+      it = smap.find(synonym);
+      //if the synonym is not already in the map
+      if (it == smap.end())
+
+      {
+      
+        smap.insert(make_pair(synonym, kmap.find(keyword)->getValue()));
+   
+
+      }
+
+      else
+      {
+
+        set<Product*> temp = it->second;
+
+        for (itSet = kmap.find(keyword)->getValue().begin(); itSet != kmap.find(keyword)->getValue().end(); ++itSet)
+        {
+   
+          it->second.insert(*itSet);
+
+        }
+
+
+      }
+
+    } 
+  }
+
+}
+

@@ -28,7 +28,7 @@ struct ReviewDateComp{
 	bool operator()(Review* lhs, Review* rhs) 
     { // Uses string's built in operator< 
       // to do lexicographic (alphabetical) comparison
-      return lhs->getDate() < rhs->getDate();
+      return lhs->getDate() > rhs->getDate();
 	}
 
 };
@@ -196,14 +196,11 @@ void MainWindow::reviewSort()
 
 void MainWindow::addToCart()
 {
-
 	//current item
 	if (QListWidgetItem* item =  searchListWidget->currentItem())
 	{
 		string text = item->text().toStdString();
-		
-		QString name = usersBox->currentText();
-		string user = name.toStdString();
+		string user = usernameInput->text().toStdString();
 		
 		
 
@@ -226,8 +223,8 @@ void MainWindow::addToCart()
 void MainWindow::viewCart()
 {
 	viewCartList->clear();
-	QString name = usersBox->currentText();
-	string user = name.toStdString();
+
+	string user = usernameInput->text().toStdString();
 
 	vector<Product*>cart = ds->getCart(user);
 	vector<Product*>::iterator it;
@@ -253,9 +250,8 @@ void MainWindow::viewCart()
 void MainWindow::checkout()
 {
 
-	QString name = usersBox->currentText();
-	string username = name.toStdString();
-
+	//QString name = usersBox->currentText();
+	string username = usernameInput->text().toStdString();
 	vector<Product*>cart = ds->getCart(username);
 	User* user = ds->getUser(username);
 	for (unsigned int i=0; i<cart.size(); i++)
@@ -335,9 +331,7 @@ void MainWindow::removeFromCart()
 		string text = item->text().toStdString();
 
 		//getting the username
-		QString name = usersBox->currentText();
-		string username = name.toStdString();
-
+		string username = usernameInput->text().toStdString();
 		//getting user object
 		vector<Product*>cart = ds->getCart(username);
 		User* user = ds->getUser(username);
@@ -384,18 +378,21 @@ if (QListWidgetItem* item =  searchListWidget->currentItem())
 	Product* itemToGetReviews = ds->getProdObj(title);
 	vector<Review*> reviews = itemToGetReviews->getReviews();
 
-	//sorts the reveiews by date
+
+	//sorts the reviews by date
 	mergeSort(reviews, comp1);
+
 
 	//adding to the list
 	vector<Review*>::iterator it;
 	for (it = reviews.begin(); it!= reviews.end(); ++it)
 			{
-				
+		
 				string info = (*it)->getInfo();
 				reviewListWidget->addItem(QString::fromStdString(info));
 
 			}
+
 
 
 }
@@ -404,7 +401,6 @@ if (QListWidgetItem* item =  searchListWidget->currentItem())
 
 void MainWindow::addReview()
 {
-	//FIX SO REVIEW ONLY ADDED IF ITEM SELECTED
 
 //gets item to add review for
 if (QListWidgetItem* item =  searchListWidget->currentItem())
@@ -458,9 +454,10 @@ void MainWindow::submitReview()
 	istringstream (rating ) >> rating_i;
 	string reviewText_ = reviewText->toPlainText().toStdString();
 	string name = itemToAddReviewFor->getName();
+	string username = usernameInput->text().toStdString();
 
 	//creating the user's new review
-	Review* r= new Review(name, rating_i, date_string, reviewText_);
+	Review* r= new Review(name, rating_i, username, date_string, reviewText_);
 	r->prodName = name;
 	r->rating = rating_i;
 	r->date = date_string;
@@ -468,8 +465,13 @@ void MainWindow::submitReview()
 
 	//adding the user's new review
 	 itemToAddReviewFor->addReview(r);
-
+	 vector<Review*> reviews = itemToAddReviewFor->getReviews();
 	addReviewLayout->close();
+
+	ReviewDateComp comp1;
+	mergeSort(reviews, comp1);
+	
+
 	//(prodName, rating_i, date_string, reviewText);
 	showReviews();
 }
@@ -580,19 +582,8 @@ void MainWindow::showProgram()
 	reviewListWidget = new QListWidget();
 
 
-	//users combo box
-	usersBox = new QComboBox();
-	set<User*>::iterator it;
-	allUsers = ds->getUsers();
-	
-	for (it = allUsers.begin(); it!= allUsers.end(); ++it)
-	{
-		string name = (*it)->getName();
-		usersBox->addItem(QString::fromStdString(name));
 
 
-	}
-	
 	//showing the reviews
 	connect(showReviewButton, SIGNAL(clicked()), this, SLOT(showReviews()));
 	connect(addReviewButton, SIGNAL(clicked()), this, SLOT(addReview()));
@@ -611,7 +602,7 @@ void MainWindow::showProgram()
 	thirdLayout = new QHBoxLayout();
 	addToCartButton = new QPushButton("Add to Cart");
 	viewCartButton = new QPushButton("View Cart");
-	thirdLayout->addWidget(usersBox);
+	//thirdLayout->addWidget(usersBox);
 	thirdLayout->addWidget(addToCartButton);
 	thirdLayout->addWidget(viewCartButton);
 	overallLayout->addLayout(thirdLayout);
@@ -682,22 +673,13 @@ void MainWindow::addUser()
 	string username = usernameInput->text().toStdString();
 	string password = passwordInput->text().toStdString();
 
-bool uniqueUser = true;
-
 	
 set<User*>::iterator it;
-	for (it = allUsers.begin(); it != allUsers.end(); ++it)
-	{
-		if ((*it)->getName() == username)
-		{
-			uniqueUser = false;
+HashTable* temp = ds->getHash();
 
-		}
 
-	}
+if (temp->find(username) != NULL)
 
-//if the user is already in the system
-if (uniqueUser == false)
 	{
 		nonUniqueUser->exec();
 
@@ -715,24 +697,19 @@ else
 
 void MainWindow::login()
 {
-string username = usernameInput->text().toStdString();
+	string username = usernameInput->text().toStdString();
 string password = passwordInput->text().toStdString();
-//bool userExists = false;	
 set<User*>::iterator it;
 User* desiredUser;
-allUsers = ds->getUsers();
+		HashTable* temp = ds->getHash();
+		desiredUser = temp->find(username);
 
-	for (it = allUsers.begin(); it !=allUsers.end(); ++it)
-	{
-		
-		if ((*it)->getName() == username)
-		{
-			//userExists = true;
-			desiredUser = (*it);
+
 			int hashedPassword = desiredUser->hashPassword(password);
 			if (hashedPassword == desiredUser->getPassword())
 				{
 					showProgram();
+			
 
 				}
 
@@ -740,8 +717,6 @@ allUsers = ds->getUsers();
 				{
 					wrongPassword->exec();
 				}
-			}
-	}
 
 
 
@@ -750,8 +725,8 @@ allUsers = ds->getUsers();
 
 void MainWindow::closeInfo()
 {
-	allUsers = ds->getUsers();
-	cout << "num users is: " << allUsers.size() << endl;
+	
+	string name = usernameInput->text().toStdString();
 	string password = passwordInput->text().toStdString();
 	int age = ageInput->text().toInt();
 	double creditAmount = creditInput->text().toDouble();
@@ -760,9 +735,10 @@ void MainWindow::closeInfo()
 	newUser->setPassword(hashedPassword);
 	newUser->setAge(age);
 	newUser->setBalance(creditAmount);
-	ds->addUser(newUser);
-	allUsers = ds->getUsers();
-	cout << "num users is: " << allUsers.size() << endl;
+	newUser->setName(name);
+	HashTable* temp = ds->getHash();
+	temp->insert(name, newUser);
+
 	infoInput->close();
 
 }

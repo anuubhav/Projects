@@ -13,6 +13,8 @@
 #include "book.h"
 #include "datastore.h"
 #include "util.h"
+#include "hashtable.h"
+#include "splay.h"
 
 
 /** 
@@ -23,7 +25,7 @@
  */
 class Data: public DataStore {
  public:
-   Data();
+   Data(char* input);
   ~Data();
 
   /**
@@ -68,13 +70,20 @@ class Data: public DataStore {
   
   Product* getProdObj(string title);
 
+  HashTable* getHash();
+
+  void getSynonyms(string filename);
+
+
+
   
 protected:
 std::vector<Product*> items; //set of every product
 std::set<User*> userbase; //set of all users
 std::map<string, vector<Product*> > carts; //all user carts
-std::map<string, set<Product*> > kmap; //maps all products that pertain to a keyword
-
-
+//std::map<string, set<Product*> > kmap; //maps all products that pertain to a keyword
+Splay<string, set<Product*> > kmap;
+HashTable* users; 
+std::map<string, set<Product*> > smap; //maps keyword to a set of products
 };
 #endif

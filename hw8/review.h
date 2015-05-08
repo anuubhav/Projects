@@ -8,21 +8,24 @@
  */
 struct Review
 {
-  Review() :  prodName(), rating(), date(), reviewText()
+  Review() :  prodName(), rating(), username(), date(), reviewText()
   { }
+
   Review(std::string& prod, 
 	 int& rate, 
+   std::string& u,
 	 std::string& d, 
 	 std::string& review_text) :
     prodName(prod), 
     rating(rate), 
+    username(u),
     date(d), 
     reviewText(review_text)
   { }
 
   void dump(std::ostream& ofile){
 
-    ofile << prodName << "\n" << rating << " " << date << " " << reviewText << "\n";
+    ofile << prodName << "\n" << rating << " " << username << " " << date << " " << reviewText << "\n";
 
   }
 
@@ -31,7 +34,7 @@ struct Review
   std::stringstream ss;
   ss << rating;
   std::string rating_string = ss.str();
-    std::string info = prodName + "\n" + rating_string + " " + date + " " + reviewText + "\n";
+    std::string info = prodName + "\n" + rating_string + " " + username + " " + date + " " + reviewText + "\n";
     return info;
 
   }
@@ -42,9 +45,9 @@ struct Review
 
 
   }
-  
   std::string prodName;
   int rating;
+  std::string username;
   std::string date;
   std::string reviewText;
 };

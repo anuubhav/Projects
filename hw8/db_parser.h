@@ -30,8 +30,10 @@ class DBParser {
 
   virtual Review* makeReview(std::string& prodname, 
 			     int& rating, 
+           std::string& username,
 			     std::string& date, 
 			     std::string& review_text);
+
  private:
   int lineno_;
   std::string errorMsg_;

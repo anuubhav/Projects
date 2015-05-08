@@ -48,11 +48,6 @@ int User::hashPassword(std::string passwordInput)
 
 	long long password = 0;
 	unsigned int digitHolder[4];
-	/*for (int i=0; i< 4; i++)
-	{
-		digitHolder[i] = 0;
-
-	}*/
 	long long iterator =1;
 
 	for (int i=passwordInput.size()-1; i >=0; i--)
@@ -101,4 +96,10 @@ void User::setBalance(double balance)
 {
 	balance_ = balance;
 
+}
+
+void User::setName(string name)
+{
+
+	name_ = name;
 }

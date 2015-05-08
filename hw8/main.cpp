@@ -5,7 +5,8 @@
 int main(int argc, char* argv[])
 {
 	
-  Data ds;
+  Data ds(argv[2]);
+
   // Instantiate the parser
   DBParser parser;
 
@@ -19,6 +20,10 @@ int main(int argc, char* argv[])
     cerr << "Error parsing!" << endl;
     return 1;
   }
+
+    ds.getSynonyms(argv[3]);
+
+
 
 	QApplication app(argc, argv);
 
