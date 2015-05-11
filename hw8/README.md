@@ -6,7 +6,7 @@ I did not do recommendations at all.
 Hash Table - done in the files hashtable.h and hashtable.cpp. The hash table has been implemented in my derived data store class, data.cpp. The Hash Table object is called users. The hash table can be tested with any function done on users. This includes functions such as inserting a user, viewing a user's cart, etc.
 
 
-Splay Tree- done in the file splay.h. The splay tree is a replacement for the previous map that mapped keywords to products. The splay tree can be tested by looking up keywords that are in the product's title. The actual splay tree object is created in data.cpp, as Splay <string, set<Product*> > kmap. Every entry in the splay tree, kmap, is between a keyword and all the products that it maps to. All the splay tree operations are found in Data::search().
+Splay Tree- done in the file splay.h. The splay tree is a replacement for the previous map that mapped keywords to products. The splay tree can be tested by looking up keywords that are in the product's title. The actual splay tree object is created in data.cpp, as a splay tree called kmap. Every entry in the splay tree, kmap, is between a keyword and all the products that it maps to. All the splay tree operations are found in Data::search().
 
 Thesaurus - done in the derived data store, data.cpp. The thesaurus function, getSynonyms(), takes in a file which will be thesaurus.txt. 
 
