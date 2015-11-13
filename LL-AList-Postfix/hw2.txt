@@ -1,0 +1,17 @@
+Problem 1
+Part (a): README unmodified 
+Part (b):  README is modified, fun_problem is untracked
+Part (c):  README is staged and fun_problem is now tracked and staged
+Part (d):  README is now modified: it ispresent in two different version, and one is committed while the other is modified
+Part (e): README is now staged, fun_problem is now modified
+		  The contents of fun_problem is nothing, it has been cleared (it is blank) by checkout
+Part (f): README is now modified, and not staged
+
+Problem 6
+bool empty() const - Θ(1), it only needs to look at the first item to see if it exists
+
+void push(const double& val) - Θ(1), it only needs to go to the top of the stack in order to add another item
+
+double const& top() const -  Θ(1), it only needs to go to the top of the stack in order to fetch the top
+
+void pop() - Θ(1), it only needs to go to the top of the stack to remove an item
