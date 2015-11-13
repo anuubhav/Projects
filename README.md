@@ -1,5 +1,4 @@
-# CS 104 Student Repository
+# Anubhav Sarkar's Projects
 
 - **Name**: Anubhav Sarkar
-- **USC ID**: 1697486881
-- **Email**: anubhavs@usc.edu
+- **Email**: anubhavsarkar@gmail.com
