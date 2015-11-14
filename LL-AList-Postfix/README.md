@@ -1,42 +1,26 @@
-## HW2
+## Data Structures
 
-This folder contains the provided code for hw2. 
-
-Instructions:
-
-Question 1: Answers are found in hw2.txt
-
-Question 2: None
-
-Question 3: Linked Lists
+Linked Lists Implementaitno
 To compile: 
 g++ -g -Wall testAddToEmptyList.cpp llistdbl.cpp -o testAddToEmptyList
 
-To test:
+To run:
 ./testAddToEmptyList
 
-If there are invalid inserts and removals, I return. 
-Question 4:
+ 
+Array List Implementation
 To compile: 
 g++ -g -Wall -c alistint.cpp -o alistint.o
 g++ -g -Wall alisttest.cpp alistint.o -o alisttest
 
 
-To test:
+To run:
 ./alisttest
 
 
-If there are invalid inserts and removals, I return.
-
-Question 5:
-Files: stackdbl.h  and stackdbl.cpp
-
-Question 6: Stack Runtime
-Answers are found in hw2.txt
-
-Question 7: Post Fix
+Post Fix Calculator using self-made stack
 To compile:
 g++ -g -Wall postfix.cpp stackdbl.cpp llistdbl.cpp -o postfix
 
-To test:
+To run
 ./postfix postfix.in postfix.out
