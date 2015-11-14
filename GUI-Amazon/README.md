@@ -1,4 +1,4 @@
-This folder contains the implementation of an Amazon client with a GUI made in QT. 
+#This folder contains the implementation of an Amazon client with a GUI made in QT. 
 
 To run: ./hw5 database.txt
 
