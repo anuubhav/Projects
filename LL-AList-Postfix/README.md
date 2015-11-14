@@ -1,6 +1,6 @@
-## Data Structures
+## LL/ AList/ Stack Data Structure Implementation in C++
 
-Linked Lists Implementaitno
+Linked Lists Implementation
 To compile: 
 g++ -g -Wall testAddToEmptyList.cpp llistdbl.cpp -o testAddToEmptyList
 
