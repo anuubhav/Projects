@@ -1,4 +1,4 @@
-# Amazon Implementation in Terminal
+# Basic Mock Amazon Implementation in Terminal with C++
 To compile: make
 To run: ./amazon database.txt
 
