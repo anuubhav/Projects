@@ -1,4 +1,4 @@
-#This folder contains the implementation of the sliding puzzle tile game
+#This folder contains the implementation of the sliding tile puzzle game in C++
 
 It is implemented using multiple heuristics to run the A* search.
 Heuristic 0- Manhattan Distance
