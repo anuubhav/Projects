@@ -1,6 +1,4 @@
-Note: I did the Login (20%), Hash Table(20%), Splay Tree(50%), and Thesaurus(20%).
-
-I did not do recommendations at all.
+#This folder contains the previous implementation of Amazon, using my own implementations of a hash table and splay tree. It also provides login functionality and search based on synonyms provided using a thesaurus
 
 
 Hash Table - done in the files hashtable.h and hashtable.cpp. The hash table has been implemented in my derived data store class, data.cpp. The Hash Table object is called users. The hash table can be tested with any function done on users. This includes functions such as viewing a user's cart,adding to their cart, etc.
@@ -14,7 +12,7 @@ Thesaurus - done in the derived data store, data.cpp. The thesaurus function, ge
 Usage:
 ./hw8 dbSmall3.txt 1 thesaurus.txt
 
-Note: the 1 specifies hash table usage. I was intending to do other bells and whistles that required command line arguments, but decided against it last minute.
+Note: the 1 specifies hash table usage. 
 
 Note: The format of the thesaurus should be as follows:
 
