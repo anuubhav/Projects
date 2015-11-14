@@ -1,4 +1,4 @@
-#This folder contains the previous implementation of Amazon, using my own implementations of a hash table and splay tree. It also provides login functionality and search based on synonyms provided using a thesaurus
+#This folder contains the previous implementation of Amazon, using my own implementations of a hash table and splay tree. It also provides login functionality and search based on synonyms provided using a thesaurus all done in C++
 
 
 Hash Table - done in the files hashtable.h and hashtable.cpp. The hash table has been implemented in my derived data store class, data.cpp. The Hash Table object is called users. The hash table can be tested with any function done on users. This includes functions such as viewing a user's cart,adding to their cart, etc.
