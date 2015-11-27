@@ -1,0 +1,27 @@
+<!-- Created by Anubhav Sarkar on 11/26/15 -->
+<!--The purpose of this program is to print out different outputs depending on what the user's input is -->
+<!--If input is divisible by 4, print "IBM" -->
+<!--If input is divisible by 7, print "BLUEMIX" -->
+<!--If input is divisible by 28, print "IBM BLUEMIX" -->
+
+<!doctype html>
+<html ng-app>
+  <head>
+  <!--This version of AngularJS is being used as older versions didn't work as desired with ng-if -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+  </head>
+  <body>
+  <p><i><font size = "10">Input your number below for a message!</font></i></p>
+    <div>
+	  <input type="number" ng-model="yourNum"  placeholder="Enter Number Here"  style="width: 300px;">
+
+	  <!-- Angular treats an empty input box after all inputs erased as 0, so there must be special handling for when input is empty to not print any output --> 
+ 	  <span ng-if="yourNum === 0">IBM BLUEMIX</span>
+ 	  <!-- !!yourNum ensures that the input field is not empty -->
+	  <span ng-if="yourNum % 28 === 0 && !!yourNum">IBM BLUEMIX</span>
+	  <span ng-if="yourNum % 7 === 0 && yourNum % 28 != 0">BLUEMIX</span> 
+  	  <span ng-if="yourNum % 4 === 0 && yourNum % 28 != 0">IBM</span>
+
+	</div>
+  </body>
+</html>
